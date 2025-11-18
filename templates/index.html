@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}ホーム - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <h1 class="hero-title">未経験から、Python×Webアプリで<br>エンジニア転職レベルの「ポートフォリオ」を作る。</h1>
+        <p class="hero-subtitle">
+            このサイトは、「独学で何から始めればいいかわからない」人のための<br>Python学習カリキュラムです。<br>基礎文法から始まり、小さなアプリ制作、Webアプリ開発、<br>そして転職に使えるポートフォリオ制作まで、<br>一つの道筋で学べるように設計しています。
+        </p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('roadmap') }}" class="btn btn-primary">学習ロードマップを見る</a>
+            <a href="{{ url_for('lessons_list') }}" class="btn btn-secondary">レッスンを始める</a>
+        </div>
+    </div>
+</div>
+
+<section class="target-section">
+    <div class="container">
+        <h2 class="section-title">こんな人向け</h2>
+        <div class="target-list">
+            <div class="target-item">✓ プログラミング未経験 / 文系出身</div>
+            <div class="target-item">✓ ProgateやYouTubeで勉強したけど、身についている実感がない</div>
+            <div class="target-item">✓ 「ポートフォリオを作れ」と言われても、何を作ればいいかわからない</div>
+            <div class="target-item">✓ 独学でエンジニア転職を目指したい</div>
+        </div>
+    </div>
+</section>
+
+<section class="capabilities-section">
+    <div class="container">
+        <h2 class="section-title">このカリキュラムでできること</h2>
+        <div class="capabilities-grid">
+            <div class="capability-card">
+                <h3>Pythonの基礎文法を理解</h3>
+                <p>文法・型・関数・ファイル操作などを理解し、自分でコードを書けるようになります。</p>
+            </div>
+            <div class="capability-card">
+                <h3>ターミナル上で動く小さなアプリを複数作成</h3>
+                <p>Todo、タイピングゲーム、家計簿などのミニアプリを実際に作ります。</p>
+            </div>
+            <div class="capability-card">
+                <h3>PythonとFlaskでWebアプリを作り、公開</h3>
+                <p>Flaskを使ったWebアプリケーション開発を学び、実際にデプロイして公開できます。</p>
+            </div>
+            <div class="capability-card">
+                <h3>転職に使える「ポートフォリオアプリ」を1つ完成</h3>
+                <p>学習管理アプリ・家計簿アプリなど、転職活動でアピールできる作品を作成します。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="flow-section">
+    <div class="container">
+        <h2 class="section-title">学習の流れ</h2>
+        <div class="flow-list">
+            <div class="flow-item">
+                <div class="flow-number">1</div>
+                <div class="flow-content">
+                    <h3>Python基礎</h3>
+                    <p>文法・型・関数・ファイル操作</p>
+                </div>
+            </div>
+            <div class="flow-item">
+                <div class="flow-number">2</div>
+                <div class="flow-content">
+                    <h3>ミニアプリ制作</h3>
+                    <p>Todo, タイピングゲーム, 家計簿など</p>
+                </div>
+            </div>
+            <div class="flow-item">
+                <div class="flow-number">3</div>
+                <div class="flow-content">
+                    <h3>FlaskでWebアプリ開発＆デプロイ</h3>
+                    <p>Webアプリケーションの作り方と公開方法</p>
+                </div>
+            </div>
+            <div class="flow-item">
+                <div class="flow-number">4</div>
+                <div class="flow-content">
+                    <h3>ポートフォリオ制作</h3>
+                    <p>学習管理アプリ・家計簿アプリなど</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2>まずは「学習ロードマップ」から流れを確認してみてください</h2>
+        <p>未経験からエンジニア転職レベルのポートフォリオを作る、<br>そのための明確な道筋がここにあります。</p>
+        <div class="cta-buttons">
+            <a href="{{ url_for('roadmap') }}" class="btn btn-primary">学習ロードマップを見る</a>
+            <a href="{{ url_for('lessons_list') }}" class="btn btn-secondary">レッスンを始める</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

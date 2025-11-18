@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}学習ロードマップ - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>学習ロードマップ</h1>
+        <p>このカリキュラムは、未経験から「ポートフォリオを作って応募できる状態」になるまでを<br>4つのフェーズで設計しています。</p>
+    </div>
+</div>
+
+<section class="roadmap-section">
+    <div class="container">
+        <div class="roadmap-timeline">
+            {% for phase in phases %}
+            <div class="roadmap-phase">
+                <div class="phase-number">{{ loop.index }}</div>
+                <div class="phase-content">
+                    <h2>{{ phase['name'] }}（目安：{{ phase['duration'] }}）</h2>
+                    {% if 'description' in phase %}
+                    <p class="phase-description">{{ phase['description'] }}</p>
+                    {% endif %}
+                    {% if 'items' in phase %}
+                    <ul class="phase-items">
+                        {% for item in phase['items'] %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <div class="phase-navigation">
+                        {% if loop.index == 1 %}
+                        <a href="{{ url_for('lessons_list') }}#phase1" class="btn btn-primary">レッスン一覧へ</a>
+                        <a href="{{ url_for('projects_list') }}" class="btn btn-secondary">次へ進む →</a>
+                        {% elif loop.index == 2 %}
+                        <a href="{{ url_for('projects_list') }}" class="btn btn-primary">プロジェクト一覧へ</a>
+                        <a href="{{ url_for('lessons_list') }}#phase3" class="btn btn-secondary">次へ進む →</a>
+                        {% elif loop.index == 3 %}
+                        <a href="{{ url_for('lessons_list') }}#phase3" class="btn btn-primary">レッスン一覧へ</a>
+                        <a href="{{ url_for('portfolio') }}" class="btn btn-secondary">次へ進む →</a>
+                        {% elif loop.index == 4 %}
+                        <a href="{{ url_for('portfolio') }}" class="btn btn-primary">ポートフォリオページへ</a>
+                        <a href="{{ url_for('faq') }}" class="btn btn-secondary">FAQを見る →</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="roadmap-note">
+    <div class="container">
+        <div class="note-box">
+            <p class="note-text">あなたのペースにもよりますが、<strong>週5〜10時間の学習で、3〜4ヶ月程度</strong>を目安にしてください。</p>
+        </div>
+    </div>
+</section>
+
+<section class="next-steps">
+    <div class="container">
+        <h2>次のステップ</h2>
+        <p>ロードマップを確認したら、実際のレッスンを始めましょう。</p>
+        <a href="{{ url_for('lessons_list') }}" class="btn btn-primary">レッスン一覧へ</a>
+    </div>
+</section>
+{% endblock %}

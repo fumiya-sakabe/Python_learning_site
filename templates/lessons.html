@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}レッスン一覧 - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>レッスン一覧</h1>
+        <p>段階的にPythonを学んでいきましょう</p>
+    </div>
+</div>
+
+<section class="lessons-section">
+    <div class="container">
+        <!-- Phase1：Python基礎 -->
+        <div id="phase1" class="lesson-phase-group">
+            <h2 class="phase-title">Phase1：Python基礎</h2>
+            <p class="phase-description">Pythonの基本的な文法とプログラミングの基礎を学びます</p>
+            {% if phase1_lessons %}
+            <div class="lessons-grid">
+                {% for lesson in phase1_lessons %}
+                <div class="lesson-card">
+                    <div class="lesson-header">
+                        <div class="lesson-badge level-{{ lesson.get('level', '初級') }}">{{ lesson.get('level', '初級') }}
+                        </div>
+                        <span class="lesson-number">{{ lesson['id'] }}</span>
+                    </div>
+                    <h3>{{ lesson['title'] }}</h3>
+                    <a href="{{ url_for('lesson_detail', lesson_id=lesson['id']) }}"
+                        class="btn btn-primary btn-sm">詳細を見る</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Phase3：Webアプリ（Flask） -->
+        <div id="phase3" class="lesson-phase-group">
+            <h2 class="phase-title">Phase3：Webアプリ開発（Flask）</h2>
+            <p class="phase-description">HTML/CSS/JavaScriptの基礎からFlaskデプロイまで一気通貫で学びます</p>
+
+            <div class="phase3-overview-card">
+                <h3>このフェーズで学ぶこと</h3>
+                <ul>
+                    {% for point in phase3_overview %}
+                    <li>{{ point }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% if phase3_progress.show %}
+            <div class="phase-progress">
+                <div class="progress-meta">
+                    <strong>進捗状況</strong>
+                    <span>{{ phase3_progress.completed }} / {{ phase3_progress.total }} レッスン完了</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: {{ phase3_progress.percent }}%"></div>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="phase3-timeline">
+                <h3>推奨学習順</h3>
+                <div class="timeline-grid">
+                    {% for step in phase3_timeline %}
+                    <div class="timeline-step">
+                        <div class="timeline-number">{{ step.step }}</div>
+                        <div>
+                            <h4>{{ step.title }}</h4>
+                            <p>{{ step.description }}</p>
+                            {% if step.lessons %}
+                            <div class="timeline-lessons">
+                                {% for lesson_id in step.lessons %}
+                                <a href="{{ url_for('lesson_detail', lesson_id=lesson_id) }}">
+                                    {{ lesson_id }}
+                                </a>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {% if phase3_lessons %}
+            <div class="lessons-grid">
+                {% for lesson in phase3_lessons %}
+                <div class="lesson-card">
+                    <div class="lesson-header">
+                        <div class="lesson-badge level-{{ lesson.get('level', '中級') }}">{{ lesson.get('level', '中級') }}
+                        </div>
+                        <span class="lesson-number">{{ lesson['id'] }}</span>
+                    </div>
+                    <h3>{{ lesson['title'] }}</h3>
+                    <a href="{{ url_for('lesson_detail', lesson_id=lesson['id']) }}"
+                        class="btn btn-primary btn-sm">詳細を見る</a>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="phase3-checklist">
+                <h3>実践タスクチェックリスト</h3>
+                {% if current_user.is_authenticated %}
+                <ul class="checklist-list">
+                    {% for task in phase3_tasks %}
+                    <li class="checklist-item {% if task.completed %}completed{% endif %}">
+                        <div>
+                            <h4>{{ task.title }}</h4>
+                            <p>{{ task.description }}</p>
+                        </div>
+                        <button class="btn btn-sm task-toggle {% if task.completed %}btn-secondary{% else %}btn-outline{% endif %}"
+                            data-task-id="{{ task.id }}">
+                            {% if task.completed %}完了済み{% else %}完了にする{% endif %}
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="checklist-note">ログインするとタスクの完了状況を記録できます。</p>
+                <ul class="checklist-list">
+                    {% for task in phase3_tasks %}
+                    <li class="checklist-item">
+                        <div>
+                            <h4>{{ task.title }}</h4>
+                            <p>{{ task.description }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if not phase1_lessons and not phase3_lessons %}
+        <div class="empty-state">
+            <p>レッスンがまだ追加されていません。</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% if current_user.is_authenticated %}
+<script>
+document.querySelectorAll('.task-toggle').forEach((button) => {
+  button.addEventListener('click', async () => {
+    const taskId = button.dataset.taskId;
+    button.disabled = true;
+    try {
+      const res = await fetch('{{ url_for("api_progress_toggle") }}', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item_id: taskId, kind: 'task' })
+      });
+      if (!res.ok) throw new Error('通信に失敗しました');
+      const data = await res.json();
+      const listItem = button.closest('.checklist-item');
+      if (data.completed) {
+        listItem.classList.add('completed');
+        button.textContent = '完了済み';
+        button.classList.remove('btn-outline');
+        button.classList.add('btn-secondary');
+      } else {
+        listItem.classList.remove('completed');
+        button.textContent = '完了にする';
+        button.classList.remove('btn-secondary');
+        button.classList.add('btn-outline');
+      }
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      button.disabled = false;
+    }
+  });
+});
+</script>
+{% endif %}
+{% endblock %}

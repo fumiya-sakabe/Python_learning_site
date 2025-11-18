@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Phase2：ミニアプリ制作 - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>Phase2：ミニアプリ制作</h1>
+        <p>小さくても「最後まで動くもの」を作ることで、学んだ文法が使えるスキルに変わります。</p>
+    </div>
+</div>
+
+<section class="phase2-overview">
+    <div class="container">
+        {% if phase %}
+        <h2>{{ phase['name'] }}（目安：{{ phase['duration'] }}）</h2>
+        {% if 'description' in phase %}
+        <p class="phase-description">{{ phase['description'] }}</p>
+        {% endif %}
+        {% if 'items' in phase %}
+        <ul class="phase-items">
+            {% for item in phase['items'] %}
+            <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endif %}
+    </div>
+</section>
+
+<section class="projects-section">
+    <div class="container">
+        <h2>取り組むミニアプリ</h2>
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                <h3>{{ project.title }}</h3>
+                <p class="project-description">{{ project.get('description', '説明がありません') }}</p>
+                <div class="project-actions">
+                    <a class="btn btn-primary" href="{{ url_for('project_detail', project_id=project.id) }}">詳細を見る</a>
+                    <a class="btn btn-secondary" href="{{ url_for('projects_list') }}">一覧に戻る</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="phase-navigation">
+    <div class="container">
+        <a href="{{ url_for('lessons_list') }}#phase1" class="btn btn-secondary">← Phase1へ</a>
+        <a href="{{ url_for('lessons_list') }}#phase3" class="btn btn-secondary">Phase3へ →</a>
+    </div>
+</section>
+{% endblock %}
+
+

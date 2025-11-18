@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}ミニアプリ一覧 - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>ミニアプリ一覧</h1>
+        <p>実践的なプロジェクトを通じて、Pythonのスキルを向上させましょう</p>
+    </div>
+</div>
+
+<section class="projects-section">
+    <div class="container">
+        {% if projects %}
+        <div class="projects-grid">
+            {% for project in projects %}
+            <div class="project-card">
+                <h3>{{ project.title }}</h3>
+                <p class="project-description">{{ project.get('description', '説明がありません') }}</p>
+                <div class="project-id">ID: {{ project.id }}</div>
+                <div class="project-actions">
+                    <a class="btn btn-primary btn-sm" href="{{ url_for('project_detail', project_id=project.id) }}">このレッスンを見る</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <p>プロジェクトがまだ追加されていません。</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+

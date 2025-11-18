@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}ログイン - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>ログイン</h1>
+        <p>デモ用アカウント: user@example.com / testpass</p>
+    </div>
+</div>
+
+<section class="login-section">
+    <div class="container">
+        <form method="POST" class="form card">
+            <div class="form-group">
+                <label for="email">メールアドレス</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">ログイン</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
+
+

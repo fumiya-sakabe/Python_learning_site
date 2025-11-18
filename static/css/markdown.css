@@ -1,0 +1,168 @@
+/* Markdownコンテンツのスタイル */
+.markdown-body {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: var(--bg-color);
+    padding: 3rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    line-height: 1.8;
+}
+
+.markdown-body h1 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+.markdown-body h2 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.25rem;
+}
+
+.markdown-body h3 {
+    font-size: 1.25rem;
+    color: var(--text-color);
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+    font-size: 1rem;
+    color: var(--text-color);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.markdown-body p {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.markdown-body ul,
+.markdown-body ol {
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.markdown-body li {
+    margin-bottom: 0.5rem;
+}
+
+.markdown-body code {
+    background-color: var(--bg-light);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #e83e8c;
+}
+
+.markdown-body pre {
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+}
+
+.markdown-body pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+}
+
+.markdown-body blockquote {
+    border-left: 4px solid var(--primary-color);
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+.markdown-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.markdown-body th,
+.markdown-body td {
+    border: 1px solid var(--border-color);
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.markdown-body th {
+    background-color: var(--bg-light);
+    font-weight: bold;
+}
+
+.markdown-body a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.markdown-body a:hover {
+    text-decoration: underline;
+}
+
+.markdown-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+}
+
+.markdown-body hr {
+    border: none;
+    border-top: 2px solid var(--border-color);
+    margin: 2rem 0;
+}
+
+/* コードハイライト用のスタイル（Pygments用） */
+.highlight {
+    margin-bottom: 1rem;
+}
+
+/* シンタックスハイライトの背景色調整 */
+.highlight pre {
+    background-color: #1e293b;
+}
+
+/* 折りたたみ解答 */
+.markdown-body details {
+    margin: 0.75rem 0 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    background-color: var(--bg-color);
+}
+
+.markdown-body details > summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    user-select: none;
+}
+
+.markdown-body details[open] > summary {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.markdown-body details > *:not(summary) {
+    padding: 1rem;
+}
+

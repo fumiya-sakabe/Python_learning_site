@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}最終ポートフォリオ課題 - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>最終ポートフォリオ課題</h1>
+        <p>学習の集大成として、あなた自身のポートフォリオ作品を作成しましょう</p>
+    </div>
+</div>
+
+<section class="portfolio-section">
+    <div class="container">
+        <div class="portfolio-content">
+            <h2>ポートフォリオ課題について</h2>
+            <p>これまでの学習で得た知識とスキルを活かして、オリジナルのプロジェクトを作成します。</p>
+            
+            <h3>課題の目的</h3>
+            <ul>
+                <li>学習した内容の総合的な理解と応用</li>
+                <li>実践的な開発経験の獲得</li>
+                <li>自身のスキルをアピールできる作品の作成</li>
+            </ul>
+
+            <h3>推奨されるプロジェクト例</h3>
+            <ul>
+                <li>Webアプリケーション（Flask/Django使用）</li>
+                <li>データ分析・可視化ツール</li>
+                <li>APIを使ったアプリケーション</li>
+                <li>自動化ツール</li>
+            </ul>
+
+            <div class="portfolio-cta">
+                <a href="{{ url_for('lessons_list') }}" class="btn btn-primary">学習を続ける</a>
+                <a href="{{ url_for('projects_list') }}" class="btn btn-secondary">ミニアプリを確認</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+

@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}{{ lesson.title }} - Python学習サイト{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/markdown.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="lesson-detail-header">
+    <div class="container">
+        <a href="{{ url_for('lessons_list') }}" class="back-link">← レッスン一覧に戻る</a>
+        <h1>{{ lesson.title }}</h1>
+        <div class="lesson-meta">
+            <span class="badge">{{ lesson.get('level', '初級') }}</span>
+            <span class="badge">{{ lesson.get('category', 'N/A') }}</span>
+        </div>
+    </div>
+</div>
+
+<section class="lesson-content">
+    <div class="container">
+        {% if current_user.is_authenticated %}
+        <div class="progress-toggle">
+            <button id="toggle-progress" class="btn {{ 'btn-secondary' if completed else 'btn-primary' }}">
+                {{ '完了を外す' if completed else 'このレッスンを完了にする' }}
+            </button>
+            <span id="progress-state" class="badge">{{ '完了' if completed else '未完了' }}</span>
+        </div>
+        {% endif %}
+        <div class="markdown-body">
+            {{ content|safe }}
+        </div>
+    </div>
+</section>
+
+<nav class="lesson-navigation">
+    <div class="container">
+        <div class="lesson-nav-buttons">
+            {% if prev_lesson %}
+            <a href="{{ url_for('lesson_detail', lesson_id=prev_lesson['id']) }}" class="btn btn-secondary">
+                ← {{ prev_lesson['title'] }}
+            </a>
+            {% else %}
+            <span class="btn btn-secondary disabled">← 前のレッスン</span>
+            {% endif %}
+            
+            <a href="{{ url_for('lessons_list') }}" class="btn btn-primary">レッスン一覧に戻る</a>
+            
+            {% if next_lesson %}
+            <a href="{{ url_for('lesson_detail', lesson_id=next_lesson['id']) }}" class="btn btn-secondary">
+                {{ next_lesson['title'] }} →
+            </a>
+            {% else %}
+            <span class="btn btn-secondary disabled">次のレッスン →</span>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% if current_user.is_authenticated %}
+<script>
+document.getElementById('toggle-progress')?.addEventListener('click', async function () {
+  const res = await fetch('{{ url_for("api_progress_toggle") }}', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ item_id: '{{ lesson.id }}', kind: 'lesson' })
+  });
+  if (!res.ok) return;
+  const data = await res.json();
+  const btn = document.getElementById('toggle-progress');
+  const state = document.getElementById('progress-state');
+  if (data.completed) {
+    btn.classList.remove('btn-primary'); btn.classList.add('btn-secondary');
+    btn.textContent = '完了を外す';
+    state.textContent = '完了';
+  } else {
+    btn.classList.remove('btn-secondary'); btn.classList.add('btn-primary');
+    btn.textContent = 'このレッスンを完了にする';
+    state.textContent = '未完了';
+  }
+});
+</script>
+{% endif %}
+{% endblock %}
+

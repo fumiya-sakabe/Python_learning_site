@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}{{ project.title }} - ミニアプリ詳細{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/markdown.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>{{ project.title }}</h1>
+        <p class="project-id">ID: {{ project.id }}</p>
+    </div>
+</div>
+
+<section class="lesson-content">
+    <div class="container">
+        {% if current_user.is_authenticated %}
+        <div class="progress-toggle">
+            <button id="toggle-progress" class="btn {{ 'btn-secondary' if completed else 'btn-primary' }}">
+                {{ '完了を外す' if completed else 'このプロジェクトを完了にする' }}
+            </button>
+            <span id="progress-state" class="badge">{{ '完了' if completed else '未完了' }}</span>
+        </div>
+        {% endif %}
+        <div class="markdown-body">
+            {{ content|safe }}
+        </div>
+    </div>
+</section>
+
+<nav class="lesson-navigation">
+    <div class="container">
+        <div class="lesson-nav-buttons">
+            {% if prev_project %}
+            <a href="{{ url_for('project_detail', project_id=prev_project['id']) }}" class="btn btn-secondary">
+                ← {{ prev_project['title'] }}
+            </a>
+            {% else %}
+            <span class="btn btn-secondary disabled">← 前のプロジェクト</span>
+            {% endif %}
+
+            <a href="{{ url_for('phase2') }}" class="btn btn-primary">Phase2に戻る</a>
+            <a href="{{ url_for('projects_list') }}" class="btn btn-primary">一覧に戻る</a>
+
+            {% if next_project %}
+            <a href="{{ url_for('project_detail', project_id=next_project['id']) }}" class="btn btn-secondary">
+                {{ next_project['title'] }} →
+            </a>
+            {% else %}
+            <span class="btn btn-secondary disabled">次のプロジェクト →</span>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+{% if current_user.is_authenticated %}
+<script>
+document.getElementById('toggle-progress')?.addEventListener('click', async function () {
+  const res = await fetch('{{ url_for("api_progress_toggle") }}', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ item_id: '{{ project.id }}', kind: 'project' })
+  });
+  if (!res.ok) return;
+  const data = await res.json();
+  const btn = document.getElementById('toggle-progress');
+  const state = document.getElementById('progress-state');
+  if (data.completed) {
+    btn.classList.remove('btn-primary'); btn.classList.add('btn-secondary');
+    btn.textContent = '完了を外す';
+    state.textContent = '完了';
+  } else {
+    btn.classList.remove('btn-secondary'); btn.classList.add('btn-primary');
+    btn.textContent = 'このプロジェクトを完了にする';
+    state.textContent = '未完了';
+  }
+});
+</script>
+{% endif %}
+{% endblock %}
+
+
