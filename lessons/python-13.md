@@ -225,7 +225,7 @@ print(file_path.parent)  # folder
 
 ## 演習課題
 
-1. 現在の日時を表示し、100日後の日付を計算してください：
+問1. 現在の日時を表示し、100日後の日付を計算してください：
 
 ```python
 from datetime import datetime, timedelta
@@ -243,7 +243,7 @@ print((now + timedelta(days=100)).date())
 ```
 </details>
 
-2. `random`モジュールを使って、1から6までのランダムな整数を生成してください（サイコロ）：
+問2. `random`モジュールを使って、1から6までのランダムな整数を生成してください（サイコロ）：
 
 ```python
 import random
@@ -259,7 +259,7 @@ print(random.randint(1, 6))
 ```
 </details>
 
-3. `Counter`を使って、リスト内の要素の出現回数を数えてください：
+問3. `Counter`を使って、リスト内の要素の出現回数を数えてください：
 
 ```python
 from collections import Counter
@@ -277,7 +277,7 @@ print(Counter(words))  # Counter({'apple': 3, 'banana': 2, 'orange': 1})
 ```
 </details>
 
-4. `itertools`を使って、3つの色から2つを選ぶ組み合わせを全て表示してください：
+問4. `itertools`を使って、3つの色から2つを選ぶ組み合わせを全て表示してください：
 
 ```python
 from itertools import combinations
@@ -296,7 +296,7 @@ for c in combinations(colors, 2):
 ```
 </details>
 
-5. `json`モジュールを使って、辞書をJSON形式のファイルに保存してください：
+問5. `json`モジュールを使って、辞書をJSON形式のファイルに保存してください：
 
 ```python
 import json

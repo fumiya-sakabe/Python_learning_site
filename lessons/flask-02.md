@@ -64,7 +64,7 @@ def index():
 
 ### 4. テンプレートの制御構文
 
-**条件分岐**
+<strong class="term">条件分岐</strong>
 
 ```html
 {% if user %}
@@ -74,7 +74,7 @@ def index():
 {% endif %}
 ```
 
-**ループ**
+<strong class="term">ループ</strong>
 
 ```html
 <ul>
@@ -84,7 +84,7 @@ def index():
 </ul>
 ```
 
-**辞書のループ**
+<strong class="term">辞書のループ</strong>
 
 ```html
 {% for key, value in data.items() %}
@@ -257,7 +257,7 @@ class ContactForm(FlaskForm):
 
 ## 演習課題
 
-1. テンプレートを作成して、変数を表示してください：
+問1. テンプレートを作成して、変数を表示してください：
 
 ```python
 @app.route('/')
@@ -284,7 +284,7 @@ def index():
 ```
 </details>
 
-2. ベーステンプレートを作成して、他のテンプレートで継承してください：
+問2. ベーステンプレートを作成して、他のテンプレートで継承してください：
 
 ```html
 <!-- base.html を作成 -->
@@ -315,7 +315,7 @@ def index():
 ```
 </details>
 
-3. ログインフォームを作成して、ユーザー名とパスワードを受け取ってください：
+問3. ログインフォームを作成して、ユーザー名とパスワードを受け取ってください：
 
 ```python
 @app.route('/login', methods=['GET', 'POST'])
@@ -347,7 +347,7 @@ def login():
 ```
 </details>
 
-4. フォームの検証を追加して、エラーメッセージを表示してください：
+問4. フォームの検証を追加して、エラーメッセージを表示してください：
 
 ```python
 # フォームの検証ロジックを実装
@@ -373,7 +373,7 @@ def form():
 ```
 </details>
 
-5. 条件分岐とループを使って、動的なリストを表示してください：
+問5. 条件分岐とループを使って、動的なリストを表示してください：
 
 ```html
 {% for item in items %}

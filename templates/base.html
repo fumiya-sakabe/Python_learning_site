@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +8,65 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% block extra_head %}{% endblock %}
 </head>
+
 <body>
     <nav class="navbar">
         <div class="container">
             <a href="{{ url_for('index') }}" class="logo">Python学習</a>
-            <ul class="nav-menu">
+            <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="{{ url_for('index') }}">ホーム</a></li>
                 <li><a href="{{ url_for('roadmap') }}">ロードマップ</a></li>
                 <li><a href="{{ url_for('lessons_list') }}">レッスン</a></li>
                 <li><a href="{{ url_for('projects_list') }}">プロジェクト</a></li>
                 <li><a href="{{ url_for('portfolio') }}">ポートフォリオ</a></li>
+                <li><a href="{{ url_for('search_page') }}" class="nav-search-link">🔍 検索</a></li>
+                <li class="nav-divider"></li>
+                <li><a href="{{ url_for('common_mistakes_page') }}">つまずきポイント</a></li>
+                <li><a href="{{ url_for('code_examples_page') }}">コード例検索</a></li>
                 <li><a href="{{ url_for('faq') }}">FAQ</a></li>
                 {% if current_user.is_authenticated %}
+                <li class="nav-divider"></li>
+                <li><a href="{{ url_for('dashboard') }}">ダッシュボード</a></li>
+                <li><a href="{{ url_for('favorites_page') }}">お気に入り</a></li>
                 <li><span class="nav-user">ようこそ、{{ current_user.name }}さん</span></li>
                 <li><a href="{{ url_for('logout') }}">ログアウト</a></li>
                 {% else %}
+                <li class="nav-divider"></li>
                 <li><a href="{{ url_for('login') }}">ログイン</a></li>
                 {% endif %}
             </ul>
         </div>
     </nav>
+
+    <script>
+        // ハンバーガーメニューのトグル
+        document.addEventListener('DOMContentLoaded', function () {
+            const navToggle = document.getElementById('navToggle');
+            const navMenu = document.getElementById('navMenu');
+
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', function () {
+                    navMenu.classList.toggle('active');
+                    navToggle.classList.toggle('active');
+                });
+
+                // メニューリンクをクリックしたら閉じる（モバイル用）
+                navMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', function () {
+                        if (window.innerWidth <= 1024) {
+                            navMenu.classList.remove('active');
+                            navToggle.classList.remove('active');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
 
     <main class="main-content">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -49,5 +89,5 @@
         </div>
     </footer>
 </body>
-</html>
 
+</html>

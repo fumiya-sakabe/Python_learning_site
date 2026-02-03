@@ -26,12 +26,12 @@
 - Python公式サイト: https://www.python.org/
 - すでにインストール済みの場合はバージョンを確認しましょう。
 
-**Windowsの場合:**
+<strong class="highlight">Windowsの場合:</strong>
 ```bash
 python --version
 ```
 
-**macOS/Linuxの場合:**
+<strong class="highlight">macOS/Linuxの場合:</strong>
 ```bash
 python3 --version
 ```
@@ -62,12 +62,12 @@ python3 -m venv venv
 
 仮想環境を作成したら、有効化する必要があります。
 
-**Windowsの場合:**
+<strong class="highlight">Windowsの場合:</strong>
 ```bash
 venv\Scripts\activate
 ```
 
-**macOS/Linuxの場合:**
+<strong class="highlight">macOS/Linuxの場合:</strong>
 ```bash
 source venv/bin/activate
 ```
@@ -109,7 +109,7 @@ pip list
 Pythonの開発には、適切なエディタを使用することが重要です。
 
 推奨エディタ：
-- **Visual Studio Code**: 無料で高機能、拡張機能が豊富（本教材ではVS Codeを前提に解説します）
+- <strong class="term">Visual Studio Code</strong>: 無料で高機能、拡張機能が豊富（本教材ではVS Codeを前提に解説します）
 
 VS Codeをインストールしたら、Python拡張機能を入れておくと補完やデバッグが使いやすくなります。
 
@@ -144,7 +144,7 @@ VS Codeをインストールしたら、Python拡張機能を入れておくと�
 
 ## 演習課題
 
-1. Pythonが正しくインストールされているか確認し、バージョンを表示してください。
+問1. Pythonが正しくインストールされているか確認し、バージョンを表示してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -156,7 +156,7 @@ python --version   # または macOS/Linuxでは python3 --version
 出力例: `Python 3.11.x`
 </details>
 
-2. 新しいフォルダを作成し、その中で仮想環境を作成して有効化してください。
+問2. 新しいフォルダを作成し、その中で仮想環境を作成して有効化してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -174,7 +174,7 @@ source venv/bin/activate
 プロンプト先頭に`(venv)`が表示されていればOKです。
 </details>
 
-3. 仮想環境が有効化されていることを確認し（プロンプトに`(venv)`が表示される）、`pip list`コマンドで現在インストールされているパッケージを確認してください。
+問3. 仮想環境が有効化されていることを確認し（プロンプトに`(venv)`が表示される）、`pip list`コマンドで現在インストールされているパッケージを確認してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -186,7 +186,7 @@ source venv/bin/activate
 初期状態ではほとんど空（`pip`, `setuptools`, `wheel`など）です。
 </details>
 
-4. 簡単なテスト用パッケージ（例：`requests`）をインストールし、`pip list`で確認してください。
+問4. 簡単なテスト用パッケージ（例：`requests`）をインストールし、`pip list`で確認してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -199,7 +199,7 @@ source venv/bin/activate
 `requests 2.x.x`のように表示されればOKです。
 </details>
 
-5. エディタでPythonファイルを作成し、以下のコードを実行してみてください：
+問5. エディタでPythonファイルを作成し、以下のコードを実行してみてください：
 
 ```python
 print("Hello, Python!")

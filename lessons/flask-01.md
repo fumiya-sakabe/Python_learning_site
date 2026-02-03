@@ -20,15 +20,37 @@ Flaskは、PythonでWebアプリケーションを開発するための軽量な
 
 ## 解説
 
+このレッスンでは、Flaskを使ってWebアプリケーションを作成する方法を学びます。Flaskは、PythonでWebアプリを作るための<strong class="term">フレームワーク</strong>（便利な道具の集合）です。
+
+<strong class="term">Webアプリケーション</strong>とは、ブラウザ（Chrome、Safariなど）でアクセスできるプログラムのことです。このサイトもWebアプリケーションの一つです。
+
+まずは、Flaskをインストールして、最もシンプルなWebアプリを作成してみましょう。
+
 ### 1. Flaskのインストール
 
-`pip`を使ってFlaskをインストールします。
+Flaskを使うためには、まずFlaskをインストールする必要があります。Pythonでは、外部のライブラリ（便利な機能の集まり）を`pip`というツールでインストールします。
+
+<strong class="term">pip</strong>とは、Pythonのパッケージマネージャー（ライブラリをインストール・管理するツール）です。
+
+仮想環境が有効化されていることを確認してから、以下のコマンドを実行してください：
 
 ```bash
 pip install flask
 ```
 
 ### 2. 最小限のFlaskアプリ
+
+それでは、最もシンプルなFlaskアプリを作成してみましょう。このコードで、「Hello, World!」と表示するWebページが作れます。
+
+<strong class="highlight">コードの説明：</strong>
+1. `from flask import Flask`：Flaskの機能を使えるようにインポート（取り込む）します
+2. `app = Flask(__name__)`：Flaskアプリケーションのインスタンス（実体）を作成します
+3. `@app.route('/')`：これは<strong class="term">デコレータ</strong>で、「このURLにアクセスしたら、次の関数を実行する」という意味です
+   - `/`は「トップページ（ホームページ）」を表します
+4. `def index():`：ページを表示するための<strong class="term">関数</strong>を定義します
+5. `return '<h1>Hello, World!</h1>'`：表示する内容を返します（HTMLタグも使えます）
+6. `if __name__ == '__main__':`：このファイルを直接実行した時だけ、以下のコードを実行します
+7. `app.run(debug=True)`：Webサーバーを起動します
 
 ```python
 from flask import Flask
@@ -43,11 +65,23 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-実行すると、`http://localhost:5000`でアクセスできます。
+<strong class="highlight">実行方法：</strong>
+1. このコードを`app.py`という名前で保存します
+2. ターミナルで`python app.py`を実行します
+3. ブラウザで`http://localhost:5000`にアクセスします
+
+実行すると、ブラウザに「Hello, World!」と大きく表示されます。
 
 ### 3. ルーティングの基本
 
-`@app.route()`デコレータでURLと関数を対応付けます。
+<strong class="term">ルーティング</strong>とは、URL（ブラウザに入力するアドレス）と、実行する関数を対応付けることです。例えば、「`/about`にアクセスしたら、`about()`という関数を実行する」という対応関係を作ることができます。
+
+`@app.route()`という<strong class="term">デコレータ</strong>を使うと、URLと関数を対応付けられます。デコレータとは、関数の前に`@`を付けて書く特別な構文です。
+
+例えば、以下のコードでは：
+- `/`にアクセスしたら「ホームページ」と表示
+- `/about`にアクセスしたら「Aboutページ」と表示
+- `/contact`にアクセスしたら「Contactページ」と表示
 
 ```python
 from flask import Flask
@@ -72,17 +106,28 @@ if __name__ == '__main__':
 
 ### 4. 動的なルーティング
 
-URLにパラメータを含めることができます。
+これまでのルーティングは、URLが固定でした（`/about`、`/contact`など）。しかし、<strong class="term">動的なルーティング</strong>を使うと、URLに変数を含めることができます。
+
+例えば、「`/user/太郎`」「`/user/花子`」のように、ユーザー名が変わっても同じ関数を使いたい場合に便利です。
+
+URLの中の`<name>`の部分が変数になり、関数の引数として受け取れます：
 
 ```python
 @app.route('/user/<name>')
 def user(name):
     return f'<h1>こんにちは、{name}さん！</h1>'
 
+# 使用例：
 # /user/太郎 → "こんにちは、太郎さん！"
+# /user/花子 → "こんにちは、花子さん！"
 ```
 
-型を指定することもできます：
+<strong class="highlight">ポイント：</strong>
+- `<>`の中の`name`が変数名になります
+- 関数の引数`name`で、URLから取得した値を受け取れます
+- `f'...'`は<strong class="term">f-string</strong>（フォーマット済み文字列）で、変数を文字列の中に埋め込めます
+
+URLから数値を取得する場合は、型を指定することもできます：
 
 ```python
 @app.route('/post/<int:post_id>')
@@ -180,7 +225,7 @@ if __name__ == '__main__':
     )
 ```
 
-**注意**: 本番環境では`debug=False`にします。
+<strong class="highlight">注意</strong>: 本番環境では`debug=False`にします。
 
 ## よくある間違い
 
@@ -192,7 +237,7 @@ if __name__ == '__main__':
 
 ## 演習課題
 
-1. 最小限のFlaskアプリを作成して、Hello Worldを表示してください：
+問1. 最小限のFlaskアプリを作成して、Hello Worldを表示してください：
 
 ```python
 from flask import Flask
@@ -219,7 +264,7 @@ if __name__ == '__main__':
 ```
 </details>
 
-2. 以下のルートを追加してください：
+問2. 以下のルートを追加してください：
 - `/`: ホームページ
 - `/about`: Aboutページ
 - `/contact`: Contactページ
@@ -246,7 +291,7 @@ def contact():
 ```
 </details>
 
-3. 動的ルーティングを使って、ユーザー名を表示するページを作成してください：
+問3. 動的ルーティングを使って、ユーザー名を表示するページを作成してください：
 
 ```python
 @app.route('/user/<name>')
@@ -265,7 +310,7 @@ def user(name):
 ```
 </details>
 
-4. URLパラメータから検索キーワードを取得して表示してください：
+問4. URLパラメータから検索キーワードを取得して表示してください：
 
 ```python
 from flask import request
@@ -289,7 +334,7 @@ def search():
 ```
 </details>
 
-5. エラーハンドラーを追加して、404エラーのカスタムページを表示してください：
+問5. エラーハンドラーを追加して、404エラーのカスタムページを表示してください：
 
 ```python
 @app.errorhandler(404)

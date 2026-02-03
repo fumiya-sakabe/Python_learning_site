@@ -214,7 +214,7 @@ function3()  # "エラーをキャッチ: エラーです"
 
 ## 演習課題
 
-1. ユーザーに数値を入力させて、ゼロ除算エラーを処理してください：
+問1. ユーザーに数値を入力させて、ゼロ除算エラーを処理してください：
 
 ```python
 try:
@@ -241,7 +241,7 @@ except ZeroDivisionError:
 ```
 </details>
 
-2. ファイルを読み込む処理で、`FileNotFoundError`を処理してください：
+問2. ファイルを読み込む処理で、`FileNotFoundError`を処理してください：
 
 ```python
 filename = "example.txt"
@@ -265,7 +265,7 @@ except FileNotFoundError:
 ```
 </details>
 
-3. リストの範囲外アクセスを処理してください：
+問3. リストの範囲外アクセスを処理してください：
 
 ```python
 numbers = [1, 2, 3]
@@ -292,7 +292,7 @@ except IndexError:
 ```
 </details>
 
-4. カスタム例外を作成して、負の数が渡された場合に例外を発生させてください：
+問4. カスタム例外を作成して、負の数が渡された場合に例外を発生させてください：
 
 ```python
 class NegativeError(Exception):
@@ -324,7 +324,7 @@ except NegativeError as e:
 ```
 </details>
 
-5. `try`/`except`/`else`/`finally`を全て使ったプログラムを作成してください：
+問5. `try`/`except`/`else`/`finally`を全て使ったプログラムを作成してください：
 
 ```python
 try:

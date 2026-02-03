@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}検索 - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>検索</h1>
+        <p>レッスンやプロジェクトを検索できます</p>
+    </div>
+</div>
+
+<section class="search-section">
+    <div class="container">
+        <div class="search-box">
+            <form method="GET" action="{{ url_for('search_page') }}" class="search-form">
+                <input type="text" name="q" value="{{ query }}" placeholder="キーワードを入力..." class="search-input" autofocus>
+                <button type="submit" class="btn btn-primary">検索</button>
+            </form>
+        </div>
+
+        <div class="search-filters">
+            <a href="{{ url_for('search_page', q=query) }}" class="filter-tag {% if not category %}active{% endif %}">
+                すべて
+            </a>
+            <a href="{{ url_for('search_page', q=query, category='lessons') }}" class="filter-tag {% if category == 'lessons' %}active{% endif %}">
+                レッスンのみ
+            </a>
+            <a href="{{ url_for('search_page', q=query, category='projects') }}" class="filter-tag {% if category == 'projects' %}active{% endif %}">
+                プロジェクトのみ
+            </a>
+        </div>
+
+        {% if query %}
+        <div class="search-results">
+            <h2>検索結果: 「{{ query }}」</h2>
+            
+            {% if results.lessons or results.projects %}
+            <div class="results-summary">
+                <p>
+                    レッスン: <strong>{{ results.lessons|length }}</strong>件、
+                    プロジェクト: <strong>{{ results.projects|length }}</strong>件
+                </p>
+            </div>
+
+            {% if results.lessons %}
+            <div class="results-group">
+                <h3>📚 レッスン</h3>
+                <div class="lessons-grid">
+                    {% for lesson in results.lessons %}
+                    <div class="lesson-card">
+                        <div class="lesson-header">
+                            <div class="lesson-badge level-{{ lesson.get('level', '初級') }}">{{ lesson.get('level', '初級') }}</div>
+                            <span class="lesson-number">{{ lesson.id }}</span>
+                        </div>
+                        <h4>{{ lesson.title }}</h4>
+                        <p class="lesson-category">{{ lesson.get('category', 'N/A') }}</p>
+                        <a href="{{ url_for('lesson_detail', lesson_id=lesson.id) }}" class="btn btn-primary btn-sm">詳細を見る</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if results.projects %}
+            <div class="results-group">
+                <h3>💻 プロジェクト</h3>
+                <div class="projects-grid">
+                    {% for project in results.projects %}
+                    <div class="project-card">
+                        <h4>{{ project.title }}</h4>
+                        <p class="project-description">{{ project.get('description', '説明がありません') }}</p>
+                        <a href="{{ url_for('project_detail', project_id=project.id) }}" class="btn btn-primary btn-sm">このレッスンを見る</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% else %}
+            <div class="empty-state">
+                <p>検索結果が見つかりませんでした。</p>
+                <p>別のキーワードで検索してみてください。</p>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="search-placeholder">
+            <p>検索キーワードを入力して、レッスンやプロジェクトを探してください。</p>
+            <div class="search-suggestions">
+                <h3>人気の検索キーワード</h3>
+                <div class="suggestion-tags">
+                    <a href="{{ url_for('search_page', q='Python') }}" class="suggestion-tag">Python</a>
+                    <a href="{{ url_for('search_page', q='Flask') }}" class="suggestion-tag">Flask</a>
+                    <a href="{{ url_for('search_page', q='関数') }}" class="suggestion-tag">関数</a>
+                    <a href="{{ url_for('search_page', q='リスト') }}" class="suggestion-tag">リスト</a>
+                    <a href="{{ url_for('search_page', q='Web') }}" class="suggestion-tag">Web</a>
+                    <a href="{{ url_for('search_page', q='変数') }}" class="suggestion-tag">変数</a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

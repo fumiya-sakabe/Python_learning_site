@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}コード例検索 - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>コード例検索</h1>
+        <p>「〇〇したい」から、すぐに使えるコード例を見つけましょう</p>
+    </div>
+</div>
+
+<section class="code-examples-section">
+    <div class="container">
+        <div class="search-box">
+            <form method="GET" action="{{ url_for('code_examples_page') }}" class="search-form">
+                <input type="text" name="q" value="{{ query }}" placeholder="例: リストに追加、ファイル読み込み..."
+                    class="search-input">
+                <button type="submit" class="btn btn-primary">検索</button>
+                {% if query or selected_category %}
+                <a href="{{ url_for('code_examples_page') }}" class="btn btn-secondary">クリア</a>
+                {% endif %}
+            </form>
+        </div>
+
+        <div class="categories-filter">
+            <span class="filter-label">カテゴリ:</span>
+            <a href="{{ url_for('code_examples_page') }}"
+                class="category-tag {% if not selected_category %}active{% endif %}">
+                すべて
+            </a>
+            {% for cat in categories %}
+            <a href="{{ url_for('code_examples_page', category=cat) }}"
+                class="category-tag {% if selected_category == cat %}active{% endif %}">
+                {{ cat }}
+            </a>
+            {% endfor %}
+        </div>
+
+        {% if query %}
+        <div class="search-results-info">
+            <p>「<strong>{{ query }}</strong>」の検索結果: {{ examples|length }}件</p>
+        </div>
+        {% endif %}
+
+        <div class="examples-list">
+            {% for example in examples %}
+            <div class="example-item">
+                <div class="example-header">
+                    <h3>{{ example.title }}</h3>
+                    <span class="example-category">{{ example.category }}</span>
+                </div>
+
+                <p class="example-description">{{ example.description }}</p>
+
+                <div class="example-code">
+                    <pre><code>{{ example.code }}</code></pre>
+                </div>
+
+                {% if example.related_lessons %}
+                <div class="related-lessons">
+                    <span class="related-label">関連レッスン:</span>
+                    {% for lesson_id in example.related_lessons %}
+                    {% for lesson in all_lessons %}
+                    {% if lesson.id == lesson_id %}
+                    <a href="{{ url_for('lesson_detail', lesson_id=lesson_id) }}" class="lesson-link">
+                        {{ lesson.title }}
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not examples %}
+        <div class="empty-state">
+            <p>該当するコード例が見つかりませんでした。</p>
+            <p>別のキーワードで検索してみてください。</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

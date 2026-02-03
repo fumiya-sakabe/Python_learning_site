@@ -192,7 +192,7 @@ response = requests.get("https://api.example.com")
 
 ## 演習課題
 
-1. `math`モジュールを使って、円の面積を計算する関数を作成してください：
+問1. `math`モジュールを使って、円の面積を計算する関数を作成してください：
 
 ```python
 import math
@@ -213,7 +213,7 @@ def circle_area(radius):
 ```
 </details>
 
-2. `datetime`モジュールを使って、現在の日時を表示してください：
+問2. `datetime`モジュールを使って、現在の日時を表示してください：
 
 ```python
 from datetime import datetime
@@ -230,7 +230,7 @@ print(datetime.now())
 ```
 </details>
 
-3. `random`モジュールを使って、1から100までのランダムな数値を生成してください：
+問3. `random`モジュールを使って、1から100までのランダムな数値を生成してください：
 
 ```python
 import random
@@ -246,7 +246,7 @@ print(random.randint(1, 100))
 ```
 </details>
 
-4. 自分でモジュール`utils.py`を作成し、便利な関数を定義して別のファイルからインポートしてください：
+問4. 自分でモジュール`utils.py`を作成し、便利な関数を定義して別のファイルからインポートしてください：
 
 ```python
 # utils.py
@@ -272,7 +272,7 @@ print(multiply(3, 4))  # 12
 ```
 </details>
 
-5. パッケージ構造を作成して、複数のモジュールを整理してください：
+問5. パッケージ構造を作成して、複数のモジュールを整理してください：
 
 ```
 myapp/

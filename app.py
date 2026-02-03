@@ -2,11 +2,14 @@ from flask import Flask, render_template, abort, request, redirect, url_for, ses
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from data import (
     lessons, projects, roadmap_phases,
-    get_lesson_by_id, get_project_by_id
+    get_lesson_by_id, get_project_by_id,
+    common_mistakes, code_examples,
+    get_common_mistakes_by_category, search_code_examples
 )
 import markdown
 import os
 import json
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "dev-secret-key")
@@ -65,12 +68,20 @@ def load_user(user_id: str):
 def load_progress(email: str):
     path = os.path.join(PROGRESS_DIR, f"{email}.json")
     if not os.path.exists(path):
-        return {"lessons": {}, "projects": {}}
+        return {"lessons": {}, "projects": {}, "tasks": {}, "favorites": [], "study_dates": [], "notes": {}}
     try:
         with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            data = json.load(f)
+            # 既存データとの互換性のため
+            if "favorites" not in data:
+                data["favorites"] = []
+            if "study_dates" not in data:
+                data["study_dates"] = []
+            if "notes" not in data:
+                data["notes"] = {}
+            return data
     except Exception:
-        return {"lessons": {}, "projects": {}}
+        return {"lessons": {}, "projects": {}, "tasks": {}, "favorites": [], "study_dates": [], "notes": {}}
 
 
 def save_progress(email: str, progress: dict):
@@ -97,8 +108,10 @@ def lessons_list():
     phase1_lessons = [lesson for lesson in lessons if lesson.get('phase') == 1]
     phase3_lessons = [lesson for lesson in lessons if lesson.get('phase') == 3]
     progress_data = None
+    favorites = []
     if current_user.is_authenticated:
         progress_data = load_progress(current_user.email)
+        favorites = progress_data.get("favorites", [])
 
     phase3_total = len(phase3_lessons)
     phase3_completed = 0
@@ -126,7 +139,8 @@ def lessons_list():
                          phase3_overview=PHASE3_OVERVIEW_POINTS,
                          phase3_timeline=PHASE3_TIMELINE,
                          phase3_tasks=phase3_tasks,
-                         phase3_progress=phase3_progress)
+                         phase3_progress=phase3_progress,
+                         favorites=favorites if current_user.is_authenticated else [])
 
 
 @app.route('/lessons/<lesson_id>')
@@ -170,22 +184,34 @@ def lesson_detail(lesson_id):
         content = "<p>Markdownファイルが見つかりませんでした。</p>"
     
     completed = False
+    is_favorite = False
+    note = ""
     if current_user.is_authenticated:
         pg = load_progress(current_user.email)
         completed = bool(pg.get("lessons", {}).get(lesson_id))
+        favorites = pg.get("favorites", [])
+        is_favorite = f"lesson:{lesson_id}" in favorites
+        notes = pg.get("notes", {})
+        note = notes.get(f"lesson:{lesson_id}", "")
 
     return render_template('lesson_detail.html', 
                          lesson=lesson, 
                          content=content,
                          prev_lesson=prev_lesson,
                          next_lesson=next_lesson,
-                         completed=completed)
+                         completed=completed,
+                         is_favorite=is_favorite,
+                         note=note)
 
 
 @app.route('/projects')
 def projects_list():
     """ミニアプリ一覧"""
-    return render_template('projects.html', projects=projects)
+    favorites = []
+    if current_user.is_authenticated:
+        progress = load_progress(current_user.email)
+        favorites = progress.get("favorites", [])
+    return render_template('projects.html', projects=projects, favorites=favorites if current_user.is_authenticated else [])
 
 @app.route('/projects/<project_id>')
 def project_detail(project_id):
@@ -212,16 +238,24 @@ def project_detail(project_id):
         if idx < len(ids) - 1:
             next_project = get_project_by_id(ids[idx + 1])
     completed = False
+    is_favorite = False
+    note = ""
     if current_user.is_authenticated:
         pg = load_progress(current_user.email)
         completed = bool(pg.get("projects", {}).get(project_id))
+        favorites = pg.get("favorites", [])
+        is_favorite = f"project:{project_id}" in favorites
+        notes = pg.get("notes", {})
+        note = notes.get(f"project:{project_id}", "")
 
     return render_template('project_detail.html',
                            project=project,
                            content=content,
                            prev_project=prev_project,
                            next_project=next_project,
-                           completed=completed)
+                           completed=completed,
+                           is_favorite=is_favorite,
+                           note=note)
 
 @app.route('/phase2')
 def phase2():
@@ -248,6 +282,129 @@ def faq():
     return render_template('faq.html')
 
 
+@app.route('/common-mistakes')
+def common_mistakes_page():
+    """よくあるつまずきポイント集"""
+    category = request.args.get('category', '')
+    mistakes = get_common_mistakes_by_category(category) if category else common_mistakes
+    return render_template('common_mistakes.html', 
+                         mistakes=mistakes, 
+                         all_mistakes=common_mistakes,
+                         all_lessons=lessons,
+                         selected_category=category)
+
+
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    """学習ダッシュボード"""
+    progress = load_progress(current_user.email)
+    
+    # Phase別のレッスン数と完了数
+    phase1_lessons = [l for l in lessons if l.get('phase') == 1]
+    phase3_lessons = [l for l in lessons if l.get('phase') == 3]
+    
+    completed_lessons = progress.get("lessons", {})
+    completed_projects = progress.get("projects", {})
+    
+    phase1_completed = sum(1 for l in phase1_lessons if completed_lessons.get(l["id"]))
+    phase3_completed = sum(1 for l in phase3_lessons if completed_lessons.get(l["id"]))
+    
+    phase1_progress = {
+        "total": len(phase1_lessons),
+        "completed": phase1_completed,
+        "percent": int((phase1_completed / len(phase1_lessons) * 100)) if phase1_lessons else 0
+    }
+    
+    phase3_progress = {
+        "total": len(phase3_lessons),
+        "completed": phase3_completed,
+        "percent": int((phase3_completed / len(phase3_lessons) * 100)) if phase3_lessons else 0
+    }
+    
+    # プロジェクト進捗
+    projects_completed = sum(1 for p in projects if completed_projects.get(p["id"]))
+    projects_progress = {
+        "total": len(projects),
+        "completed": projects_completed,
+        "percent": int((projects_completed / len(projects) * 100)) if projects else 0
+    }
+    
+    # 学習ストリーク（連続学習日数）
+    study_dates = progress.get("study_dates", [])
+    streak = 0
+    if study_dates:
+        # 日付文字列を日付オブジェクトに変換してソート
+        dates = sorted([datetime.strptime(d, "%Y-%m-%d") for d in study_dates if d])
+        today = datetime.now().date()
+        check_date = today
+        
+        # 今日または昨日から逆順にカウント
+        for i in range(len(dates) - 1, -1, -1):
+            date_obj = dates[i].date()
+            if date_obj == check_date or date_obj == check_date - timedelta(days=1):
+                streak += 1
+                check_date = date_obj - timedelta(days=1)
+            else:
+                break
+    
+    # 今日の学習を記録
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    if today_str not in study_dates:
+        study_dates.append(today_str)
+        progress["study_dates"] = study_dates
+        save_progress(current_user.email, progress)
+    
+    # 最近完了したレッスン（最新5件）
+    recent_completed = []
+    for lesson_id, completed in list(completed_lessons.items())[-5:]:
+        if completed:
+            lesson = get_lesson_by_id(lesson_id)
+            if lesson:
+                recent_completed.append(lesson)
+    recent_completed.reverse()
+    
+    # 統計
+    total_completed_lessons = len([l for l, c in completed_lessons.items() if c])
+    total_completed_projects = len([p for p, c in completed_projects.items() if c])
+    
+    return render_template('dashboard.html',
+                         phase1_progress=phase1_progress,
+                         phase3_progress=phase3_progress,
+                         projects_progress=projects_progress,
+                         streak=streak,
+                         recent_completed=recent_completed[:5],
+                         total_completed_lessons=total_completed_lessons,
+                         total_completed_projects=total_completed_projects,
+                         all_lessons=lessons,
+                         all_projects=projects)
+
+
+@app.route('/code-examples')
+def code_examples_page():
+    """コード例検索"""
+    query = request.args.get('q', '').strip()
+    category = request.args.get('category', '')
+    
+    if query:
+        examples = search_code_examples(query)
+    elif category:
+        examples = [e for e in code_examples if e.get('category') == category]
+    else:
+        examples = code_examples
+    
+    # カテゴリ一覧を取得
+    categories = list(set(e.get('category', '') for e in code_examples if e.get('category')))
+    
+    return render_template('code_examples.html',
+                         examples=examples,
+                         all_examples=code_examples,
+                         all_lessons=lessons,
+                         query=query,
+                         selected_category=category,
+                         categories=categories)
+
+
 @app.errorhandler(404)
 def not_found(error):
     """404エラーハンドラー"""
@@ -270,8 +427,138 @@ def api_progress_toggle():
         key = "tasks"
     current = bool(progress.get(key, {}).get(item_id))
     progress.setdefault(key, {})[item_id] = not current
+    
+    # 学習日を記録
+    today_str = datetime.now().strftime("%Y-%m-%d")
+    study_dates = progress.get("study_dates", [])
+    if today_str not in study_dates:
+        study_dates.append(today_str)
+    progress["study_dates"] = study_dates
+    
     save_progress(current_user.email, progress)
     return jsonify({"ok": True, "completed": not current})
+
+
+@app.route('/api/favorites/toggle', methods=['POST'])
+@login_required
+def api_favorites_toggle():
+    """お気に入りの追加/削除"""
+    payload = request.get_json(silent=True) or {}
+    item_id = payload.get("item_id")
+    kind = payload.get("kind")  # "lesson" | "project"
+    if not item_id or kind not in ("lesson", "project"):
+        return jsonify({"ok": False, "error": "invalid_parameters"}), 400
+    
+    progress = load_progress(current_user.email)
+    favorites = progress.get("favorites", [])
+    favorite_key = f"{kind}:{item_id}"
+    
+    if favorite_key in favorites:
+        favorites.remove(favorite_key)
+        is_favorite = False
+    else:
+        favorites.append(favorite_key)
+        is_favorite = True
+    
+    progress["favorites"] = favorites
+    save_progress(current_user.email, progress)
+    return jsonify({"ok": True, "is_favorite": is_favorite})
+
+
+@app.route('/api/notes/save', methods=['POST'])
+@login_required
+def api_notes_save():
+    """ノートの保存"""
+    payload = request.get_json(silent=True) or {}
+    item_id = payload.get("item_id")
+    kind = payload.get("kind")  # "lesson" | "project"
+    note = payload.get("note", "").strip()
+    
+    if not item_id or kind not in ("lesson", "project"):
+        return jsonify({"ok": False, "error": "invalid_parameters"}), 400
+    
+    progress = load_progress(current_user.email)
+    notes = progress.get("notes", {})
+    note_key = f"{kind}:{item_id}"
+    
+    if note:
+        notes[note_key] = note
+    else:
+        # 空の場合は削除
+        notes.pop(note_key, None)
+    
+    progress["notes"] = notes
+    save_progress(current_user.email, progress)
+    return jsonify({"ok": True})
+
+
+@app.route('/search')
+def search_page():
+    """検索ページ（レッスン・プロジェクト）"""
+    query = request.args.get('q', '').strip()
+    category = request.args.get('category', '')  # "lessons" | "projects" | ""
+    
+    results = {
+        "lessons": [],
+        "projects": []
+    }
+    
+    if query:
+        query_lower = query.lower()
+        
+        # レッスンを検索
+        if not category or category == "lessons":
+            for lesson in lessons:
+                title_match = query_lower in lesson.get("title", "").lower()
+                desc_match = query_lower in lesson.get("description", "").lower() if lesson.get("description") else False
+                category_match = query_lower in lesson.get("category", "").lower()
+                
+                if title_match or desc_match or category_match:
+                    results["lessons"].append(lesson)
+        
+        # プロジェクトを検索
+        if not category or category == "projects":
+            for project in projects:
+                title_match = query_lower in project.get("title", "").lower()
+                desc_match = query_lower in project.get("description", "").lower() if project.get("description") else False
+                
+                if title_match or desc_match:
+                    results["projects"].append(project)
+    
+    return render_template('search.html',
+                         query=query,
+                         category=category,
+                         results=results,
+                         all_lessons=lessons,
+                         all_projects=projects)
+
+
+@app.route('/favorites')
+@login_required
+def favorites_page():
+    """お気に入り一覧"""
+    progress = load_progress(current_user.email)
+    favorites = progress.get("favorites", [])
+    
+    favorite_lessons = []
+    favorite_projects = []
+    
+    for fav in favorites:
+        kind, item_id = fav.split(":", 1)
+        if kind == "lesson":
+            lesson = get_lesson_by_id(item_id)
+            if lesson:
+                favorite_lessons.append(lesson)
+        elif kind == "project":
+            project = get_project_by_id(item_id)
+            if project:
+                favorite_projects.append(project)
+    
+    return render_template('favorites.html',
+                         favorite_lessons=favorite_lessons,
+                         favorite_projects=favorite_projects,
+                         all_lessons=lessons,
+                         all_projects=projects)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -12,31 +12,287 @@
 
 <section class="portfolio-section">
     <div class="container">
-        <div class="portfolio-content">
+        <div class="portfolio-intro">
             <h2>ポートフォリオ課題について</h2>
-            <p>これまでの学習で得た知識とスキルを活かして、オリジナルのプロジェクトを作成します。</p>
-            
+            <p>これまでの学習で得た知識とスキルを活かして、オリジナルのプロジェクトを作成します。転職活動でアピールできる、実践的なWebアプリケーションを制作しましょう。</p>
+
             <h3>課題の目的</h3>
             <ul>
                 <li>学習した内容の総合的な理解と応用</li>
                 <li>実践的な開発経験の獲得</li>
                 <li>自身のスキルをアピールできる作品の作成</li>
+                <li>就職・転職活動で使える実績の作成</li>
             </ul>
+        </div>
 
-            <h3>推奨されるプロジェクト例</h3>
-            <ul>
-                <li>Webアプリケーション（Flask/Django使用）</li>
-                <li>データ分析・可視化ツール</li>
-                <li>APIを使ったアプリケーション</li>
-                <li>自動化ツール</li>
-            </ul>
+        <!-- ステップバイステップガイド -->
+        <div class="portfolio-steps">
+            <h2>📋 制作ステップガイド</h2>
 
-            <div class="portfolio-cta">
-                <a href="{{ url_for('lessons_list') }}" class="btn btn-primary">学習を続ける</a>
-                <a href="{{ url_for('projects_list') }}" class="btn btn-secondary">ミニアプリを確認</a>
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>プロジェクトの企画（1週目）</h3>
+                    <p><strong>何を作るか決める</strong></p>
+                    <ul>
+                        <li>自分が興味のあるテーマを選ぶ</li>
+                        <li>解決したい問題や課題を明確にする</li>
+                        <li>対象ユーザーを考える（自分用？他人向け？）</li>
+                        <li>参考になる既存サービスを調査する</li>
+                    </ul>
+                    <div class="step-tips">
+                        <strong>💡 ポイント：</strong>最初はシンプルな機能から始めて、後から機能を追加していきましょう。
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>要件定義・画面設計（1週目）</h3>
+                    <p><strong>必要な機能と画面を整理する</strong></p>
+                    <ul>
+                        <li>必要な機能をリストアップする</li>
+                        <li>画面の構成を考える（紙に書く）</li>
+                        <li>データベースの設計（どの情報を保存するか）</li>
+                        <li>使用する技術を決める（Flask、SQLiteなど）</li>
+                    </ul>
+                    <div class="step-tips">
+                        <strong>💡 要件定義のテンプレート：</strong>
+                        <div class="template-box">
+                            <p><strong>アプリ名：</strong>[あなたのアプリ名]</p>
+                            <p><strong>目的：</strong>[このアプリで解決したいこと]</p>
+                            <p><strong>主な機能：</strong></p>
+                            <ul>
+                                <li>機能1：[具体的に何ができるか]</li>
+                                <li>機能2：[具体的に何ができるか]</li>
+                            </ul>
+                            <p><strong>使用技術：</strong>Flask、SQLite、HTML/CSS、JavaScript</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>実装（2〜3週目）</h3>
+                    <p><strong>コードを書いて動かす</strong></p>
+                    <ul>
+                        <li>まず動く最小限のバージョンを作る（MVP: Minimum Viable Product）</li>
+                        <li>段階的に機能を追加していく</li>
+                        <li>バグが出たら修正する（デバッグ）</li>
+                        <li>見た目を整える（CSS）</li>
+                    </ul>
+                    <div class="step-tips">
+                        <strong>💡 実装の順序：</strong>
+                        <ol>
+                            <li>Flaskの基本的なルーティングを作る</li>
+                            <li>データベース（SQLite）のテーブルを作る</li>
+                            <li>データの保存・取得機能を実装</li>
+                            <li>HTMLテンプレートを作る</li>
+                            <li>CSSで見た目を整える</li>
+                            <li>JavaScriptで動きを追加（必要に応じて）</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>デプロイ・GitHub公開（3〜4週目）</h3>
+                    <p><strong>世界に公開する</strong></p>
+                    <ul>
+                        <li>GitHubにコードをアップロードする</li>
+                        <li>RenderやHerokuなどでデプロイする</li>
+                        <li>README.mdに説明を書く</li>
+                        <li>ポートフォリオ用の説明文を書く</li>
+                    </ul>
+                    <div class="step-tips">
+                        <strong>💡 参考レッスン：</strong>
+                        <a href="{{ url_for('lesson_detail', lesson_id='flask-05') }}"
+                            class="lesson-link">Webアプリのデプロイ</a>を確認してください。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- プロジェクトアイデア -->
+        <div class="portfolio-ideas">
+            <h2>💡 プロジェクトアイデア例</h2>
+            <p>何を作るか迷っている方は、以下のアイデアを参考にしてください。既存サービスを参考にしつつ、自分のアイデアを加えてオリジナルにしましょう。</p>
+
+            <div class="idea-grid">
+                <div class="idea-card">
+                    <h3>📝 メモ・ノートアプリ</h3>
+                    <p>学習記録やアイデアを保存できるアプリ</p>
+                    <ul>
+                        <li>メモの作成・編集・削除</li>
+                        <li>カテゴリ分け</li>
+                        <li>検索機能</li>
+                        <li>マークダウン対応</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h3>📊 家計簿アプリ</h3>
+                    <p>収入と支出を記録・管理するアプリ</p>
+                    <ul>
+                        <li>収支の入力</li>
+                        <li>カテゴリ別の集計</li>
+                        <li>月別・年別のグラフ表示</li>
+                        <li>目標予算の設定</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h3>📚 読書記録アプリ</h3>
+                    <p>読んだ本を記録・評価できるアプリ</p>
+                    <ul>
+                        <li>書籍情報の登録</li>
+                        <li>評価・レビュー機能</li>
+                        <li>読みたい本リスト</li>
+                        <li>読書統計の表示</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h3>✅ Todoリスト（拡張版）</h3>
+                    <p>タスク管理をより便利にするアプリ</p>
+                    <ul>
+                        <li>タスクの優先度設定</li>
+                        <li>期限管理</li>
+                        <li>完了率の表示</li>
+                        <li>カテゴリ・タグ機能</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h3>🎯 目標達成アプリ</h3>
+                    <p>目標を設定して進捗を管理するアプリ</p>
+                    <ul>
+                        <li>目標の設定</li>
+                        <li>進捗の記録</li>
+                        <li>進捗率の可視化</li>
+                        <li>モチベーション維持の仕組み</li>
+                    </ul>
+                </div>
+
+                <div class="idea-card">
+                    <h3>🍽️ レシピ管理アプリ</h3>
+                    <p>お気に入りのレシピを保存するアプリ</p>
+                    <ul>
+                        <li>レシピの登録</li>
+                        <li>材料・手順の記録</li>
+                        <li>画像のアップロード</li>
+                        <li>カテゴリ検索</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- チェックリスト -->
+        <div class="portfolio-checklist">
+            <h2>✅ 制作チェックリスト</h2>
+            <p>以下の項目をクリアして、完成度の高いポートフォリオを作りましょう。</p>
+
+            <div class="checklist-category">
+                <h3>企画・設計</h3>
+                <ul class="checklist-items">
+                    <li>□ プロジェクトのテーマが決まっている</li>
+                    <li>□ 必要な機能をリストアップした</li>
+                    <li>□ 画面の構成を紙に書いた</li>
+                    <li>□ データベースの設計（テーブル構造）を考えた</li>
+                </ul>
+            </div>
+
+            <div class="checklist-category">
+                <h3>実装</h3>
+                <ul class="checklist-items">
+                    <li>□ 基本的なCRUD（作成・読み取り・更新・削除）機能が実装できている</li>
+                    <li>□ データベース（SQLite）が正しく動作している</li>
+                    <li>□ フォームのバリデーション（入力チェック）が実装されている</li>
+                    <li>□ エラーハンドリング（例外処理）が適切に実装されている</li>
+                    <li>□ レスポンシブデザイン（スマホでも見られる）になっている</li>
+                    <li>□ コードにコメントが書かれている（後から見てもわかる）</li>
+                </ul>
+            </div>
+
+            <div class="checklist-category">
+                <h3>デプロイ・公開</h3>
+                <ul class="checklist-items">
+                    <li>□ GitHubにコードが公開されている</li>
+                    <li>□ README.mdに説明が書かれている（使い方、技術スタックなど）</li>
+                    <li>□ RenderやHerokuなどでデプロイできている</li>
+                    <li>□ デプロイしたURLが動作している</li>
+                    <li>□ ポートフォリオ用の説明文（何を作ったか、何を学んだか）が書けている</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- よくある質問 -->
+        <div class="portfolio-faq">
+            <h2>❓ よくある質問</h2>
+
+            <div class="faq-item">
+                <h3>Q. どのくらいの規模のアプリを作ればいいですか？</h3>
+                <p>A. 最初はシンプルなもので構いません。基本的なCRUD機能が実装できていて、見た目も整っていれば十分です。完璧を目指さず、まず動くものを作りましょう。</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Q. アイデアが浮かびません。どうすればいいですか？</h3>
+                <p>A. 自分が日常的に使うものを改善するアプリを作るのがおすすめです。「メモアプリ」「Todoリスト」「家計簿」など、既存のアプリを参考にしつつ、自分だけの機能を追加しましょう。</p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Q. 途中でつまずいたらどうすればいいですか？</h3>
+                <p>A.
+                    エラーメッセージを読む、コードを一行ずつ確認する、関連レッスンを見直す、つまずきポイントページを確認する、など試してみてください。それでも解決しない場合は、まずは動く最小限のバージョンに戻って、段階的に機能を追加していきましょう。
+                </p>
+            </div>
+
+            <div class="faq-item">
+                <h3>Q. デザインがうまくいきません。</h3>
+                <p>A. 既存のWebサイトを参考にしてみましょう。シンプルで見やすいデザインを目指せば問題ありません。まずは機能を実装して、後から見た目を整えるアプローチがおすすめです。</p>
+            </div>
+        </div>
+
+        <!-- 参考リソース -->
+        <div class="portfolio-resources">
+            <h2>📚 参考になるリソース</h2>
+
+            <div class="resource-list">
+                <div class="resource-item">
+                    <h3>関連レッスン</h3>
+                    <ul>
+                        <li><a href="{{ url_for('lesson_detail', lesson_id='flask-03') }}">SQLiteでメモアプリ</a></li>
+                        <li><a href="{{ url_for('lesson_detail', lesson_id='flask-04') }}">学習記録アプリ</a></li>
+                        <li><a href="{{ url_for('lesson_detail', lesson_id='flask-05') }}">Webアプリのデプロイ</a></li>
+                    </ul>
+                </div>
+
+                <div class="resource-item">
+                    <h3>参考になるページ</h3>
+                    <ul>
+                        <li><a href="{{ url_for('common_mistakes_page') }}">よくあるつまずきポイント</a></li>
+                        <li><a href="{{ url_for('code_examples_page') }}">コード例検索</a></li>
+                        <li><a href="{{ url_for('projects_list') }}">ミニアプリ一覧</a>（参考にしてみましょう）</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="portfolio-cta">
+            <h2>🚀 さあ、始めましょう！</h2>
+            <p>完璧を目指さず、まずは動くものを作ることから始めましょう。わからないことがあれば、関連レッスンを振り返ったり、つまずきポイントページを確認してください。</p>
+            <div class="cta-buttons">
+                <a href="{{ url_for('lessons_list') }}" class="btn btn-primary">レッスンを確認する</a>
+                <a href="{{ url_for('projects_list') }}" class="btn btn-secondary">ミニアプリを参考にする</a>
+                <a href="{{ url_for('common_mistakes_page') }}" class="btn btn-secondary">つまずきポイントを確認</a>
             </div>
         </div>
     </div>
 </section>
 {% endblock %}
-

@@ -221,7 +221,7 @@ except Exception as e:
 
 ## 演習課題
 
-1. テキストファイルに自己紹介文を書き込んで、読み込んで表示してください：
+問1. テキストファイルに自己紹介文を書き込んで、読み込んで表示してください：
 
 ```python
 # 書き込み
@@ -245,7 +245,7 @@ with open("introduction.txt", "r", encoding="utf-8") as f:
 ```
 </details>
 
-2. CSVファイルを作成して、ユーザー情報を保存してください：
+問2. CSVファイルを作成して、ユーザー情報を保存してください：
 
 ```python
 users = [
@@ -269,7 +269,7 @@ with open("users.csv", "w", encoding="utf-8", newline="") as f:
 ```
 </details>
 
-3. JSONファイルを作成して、設定情報を保存してください：
+問3. JSONファイルを作成して、設定情報を保存してください：
 
 ```python
 settings = {
@@ -291,7 +291,7 @@ with open("settings.json", "w", encoding="utf-8") as f:
 ```
 </details>
 
-4. ファイルの存在確認をしてから読み込むプログラムを作成してください：
+問4. ファイルの存在確認をしてから読み込むプログラムを作成してください：
 
 ```python
 import os
@@ -314,7 +314,7 @@ else:
 ```
 </details>
 
-5. ディレクトリ内の全てのテキストファイルを読み込んで表示してください：
+問5. ディレクトリ内の全てのテキストファイルを読み込んで表示してください：
 
 ```python
 import os

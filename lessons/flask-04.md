@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
 ### 6. テンプレートの例
 
-**index.html**
+<strong class="term">index.html</strong>
 
 ```html
 {% extends "base.html" %}
@@ -274,7 +274,7 @@ if __name__ == '__main__':
 
 ## 演習課題
 
-1. データベースを設計して、カテゴリと学習記録のテーブルを作成してください：
+問1. データベースを設計して、カテゴリと学習記録のテーブルを作成してください：
 
    ```python
    def init_db():
@@ -314,7 +314,7 @@ def init_db():
 ```
 </details>
 
-2. 学習記録を作成する機能を実装してください（カテゴリも選択できるように）：
+問2. 学習記録を作成する機能を実装してください（カテゴリも選択できるように）：
 
    ```python
    @app.route('/create', methods=['GET', 'POST'])
@@ -349,7 +349,7 @@ def create():
 ```
 </details>
 
-3. 統計情報を表示する機能を実装してください：
+問3. 統計情報を表示する機能を実装してください：
 
    ```python
    def get_statistics():
@@ -380,7 +380,7 @@ def get_statistics():
 ```
 </details>
 
-4. 日付範囲で検索する機能を実装してください：
+問4. 日付範囲で検索する機能を実装してください：
 
    ```python
    @app.route('/search', methods=['GET', 'POST'])
@@ -412,7 +412,7 @@ def search():
 ```
 </details>
 
-5. カテゴリ別の学習記録を表示するページを作成してください：
+問5. カテゴリ別の学習記録を表示するページを作成してください：
 
    ```python
    @app.route('/category/<int:category_id>')

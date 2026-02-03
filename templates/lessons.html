@@ -24,6 +24,13 @@
                         <div class="lesson-badge level-{{ lesson.get('level', '初級') }}">{{ lesson.get('level', '初級') }}
                         </div>
                         <span class="lesson-number">{{ lesson['id'] }}</span>
+                        {% if current_user.is_authenticated %}
+                        <button class="favorite-btn {% if 'lesson:' + lesson['id'] in favorites %}active{% endif %}" 
+                                data-kind="lesson" data-id="{{ lesson['id'] }}" 
+                                title="お気に入りに追加/削除">
+                            ⭐
+                        </button>
+                        {% endif %}
                     </div>
                     <h3>{{ lesson['title'] }}</h3>
                     <a href="{{ url_for('lesson_detail', lesson_id=lesson['id']) }}"
@@ -176,4 +183,35 @@ document.querySelectorAll('.task-toggle').forEach((button) => {
 });
 </script>
 {% endif %}
+
+<script>
+// お気に入りボタンの処理
+document.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        const kind = this.dataset.kind;
+        const id = this.dataset.id;
+        
+        try {
+            const response = await fetch('/api/favorites/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ item_id: id, kind: kind })
+            });
+            
+            const data = await response.json();
+            if (data.ok) {
+                if (data.is_favorite) {
+                    this.classList.add('active');
+                } else {
+                    this.classList.remove('active');
+                }
+            }
+        } catch (error) {
+            console.error('お気に入りの更新に失敗しました:', error);
+        }
+    });
+});
+</script>
 {% endblock %}

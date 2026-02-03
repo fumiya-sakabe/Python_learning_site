@@ -69,7 +69,7 @@ form.addEventListener('submit', (e) => {
 
 ## 演習課題
 
-1. ボタンを押すたびにカウンターの数字が1増えるUIを作ってください。
+問1. ボタンを押すたびにカウンターの数字が1増えるUIを作ってください。
 
 <details>
 <summary>解答を表示</summary>
@@ -89,7 +89,7 @@ form.addEventListener('submit', (e) => {
 ```
 </details>
 
-2. タブ切り替えを実装し、クリックしたタブのみ内容を表示してください。
+問2. タブ切り替えを実装し、クリックしたタブのみ内容を表示してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -108,7 +108,7 @@ tabs.forEach(tab => {
 ```
 </details>
 
-3. フォームで空欄があれば送信を止め、エラーメッセージを表示してください。
+問3. フォームで空欄があれば送信を止め、エラーメッセージを表示してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -124,7 +124,7 @@ form.addEventListener('submit', (e) => {
 ```
 </details>
 
-4. ライト/ダークモード切り替えボタンを実装し、`body` にクラスを付け替えてください。
+問4. ライト/ダークモード切り替えボタンを実装し、`body` にクラスを付け替えてください。
 
 <details>
 <summary>解答を表示</summary>

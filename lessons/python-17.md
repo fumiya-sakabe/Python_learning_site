@@ -39,7 +39,7 @@ print(f"結果: {result}")
 
 ### 2. よくあるエラーの種類
 
-**SyntaxError（構文エラー）**
+<strong class="term">SyntaxError（構文エラー）</strong>
 
 ```python
 # コロンを忘れる
@@ -51,7 +51,7 @@ if x > 0:
     print("正の数")
 ```
 
-**IndentationError（インデントエラー）**
+<strong class="term">IndentationError（インデントエラー）</strong>
 
 ```python
 # インデントが正しくない
@@ -63,7 +63,7 @@ def greet():
     print("Hello")
 ```
 
-**NameError（名前エラー）**
+<strong class="term">NameError（名前エラー）</strong>
 
 ```python
 # 未定義の変数を使用
@@ -74,7 +74,7 @@ variable = "値"
 print(variable)
 ```
 
-**TypeError（型エラー）**
+<strong class="term">TypeError（型エラー）</strong>
 
 ```python
 # 異なる型を結合
@@ -84,7 +84,7 @@ result = "文字列" + 123  # エラー
 result = "文字列" + str(123)
 ```
 
-**ValueError（値エラー）**
+<strong class="term">ValueError（値エラー）</strong>
 
 ```python
 # 型変換エラー
@@ -94,7 +94,7 @@ number = int("文字列")  # エラー
 number = int("123")
 ```
 
-**IndexError（インデックスエラー）**
+<strong class="term">IndexError（インデックスエラー）</strong>
 
 ```python
 # 範囲外のインデックス
@@ -107,7 +107,7 @@ if len(list) > 10:
     print(list[10])
 ```
 
-**KeyError（キーエラー）**
+<strong class="term">KeyError（キーエラー）</strong>
 
 ```python
 # 存在しないキー
@@ -146,25 +146,25 @@ ZeroDivisionError: division by zero
 
 ### 4. デバッグの手順
 
-1. **エラーメッセージを読む**
+1. <strong class="highlight">エラーメッセージを読む</strong>
    - エラーの種類を確認
    - エラーが発生した場所を特定
 
-2. **変数の値を確認**
+2. <strong class="highlight">変数の値を確認</strong>
    - `print()`で変数の値を出力
    - 期待値と実際の値が一致するか確認
 
-3. **コードの流れを追う**
+3. <strong class="highlight">コードの流れを追う</strong>
    - 関数の呼び出し順序を確認
    - 条件分岐の流れを確認
 
-4. **最小限のコードで再現**
+4. <strong class="highlight">最小限のコードで再現</strong>
    - 問題を再現する最小限のコードを作成
    - 原因を絞り込む
 
 ### 5. デバッグのテクニック
 
-**変数の値を出力**
+<strong class="highlight">変数の値を出力</strong>
 
 ```python
 x = 10
@@ -174,7 +174,7 @@ result = x + y
 print(f"result={result}")  # デバッグ出力
 ```
 
-**関数の入出力を確認**
+<strong class="highlight">関数の入出力を確認</strong>
 
 ```python
 def add(a, b):
@@ -184,7 +184,7 @@ def add(a, b):
     return result
 ```
 
-**条件分岐の流れを確認**
+<strong class="highlight">条件分岐の流れを確認</strong>
 
 ```python
 age = 20
@@ -196,7 +196,7 @@ else:
     print("未成年です")
 ```
 
-**ループの状態を確認**
+<strong class="highlight">ループの状態を確認</strong>
 
 ```python
 numbers = [1, 2, 3, 4, 5]
@@ -209,7 +209,7 @@ for i, num in enumerate(numbers):
 
 ### 6. よくあるエラーの対処法
 
-**AttributeError（属性エラー）**
+<strong class="term">AttributeError（属性エラー）</strong>
 
 ```python
 # Noneに属性アクセス
@@ -221,7 +221,7 @@ if result is not None:
     print(result.attribute)
 ```
 
-**FileNotFoundError（ファイルが見つからない）**
+<strong class="term">FileNotFoundError（ファイルが見つからない）</strong>
 
 ```python
 # ファイルが存在しない
@@ -235,7 +235,7 @@ if os.path.exists("ファイル.txt"):
         content = f.read()
 ```
 
-**ImportError（インポートエラー）**
+<strong class="term">ImportError（インポートエラー）</strong>
 
 ```python
 # モジュールが見つからない
@@ -250,11 +250,11 @@ except ImportError:
 
 ### 7. デバッグのベストプラクティス
 
-- **エラーメッセージを必ず読む**: エラーの原因が書かれている
-- **print()で確認する**: 変数の値や実行の流れを確認
-- **小さくテストする**: 問題を分割して、小さな部分をテスト
-- **コメントを活用する**: デバッグ用のprint文にコメントを付ける
-- **ログを使う**: 本格的な開発では`logging`モジュールを使う
+- <strong class="highlight">エラーメッセージを必ず読む</strong>: エラーの原因が書かれている
+- <strong class="highlight">print()で確認する</strong>: 変数の値や実行の流れを確認
+- <strong class="highlight">小さくテストする</strong>: 問題を分割して、小さな部分をテスト
+- <strong class="highlight">コメントを活用する</strong>: デバッグ用のprint文にコメントを付ける
+- <strong class="highlight">ログを使う</strong>: 本格的な開発では`logging`モジュールを使う
 
 ### 8. デバッグ用のprint文を削除
 
@@ -291,7 +291,7 @@ def calculate_total(price, tax_rate):
 
 ## 演習課題
 
-1. 以下のコードのエラーを見つけて修正してください：
+問1. 以下のコードのエラーを見つけて修正してください：
 
 ```python
 def add(a, b):
@@ -313,7 +313,7 @@ print(result)
 ```
 </details>
 
-2. エラーメッセージを読んで、問題を特定してください：
+問2. エラーメッセージを読んで、問題を特定してください：
 
 ```python
 numbers = [1, 2, 3]
@@ -329,7 +329,7 @@ IndexError: list index out of range
 原因: インデックス10は存在しない（要素数3）。
 </details>
 
-3. print()デバッグを使って、以下の関数の問題を特定してください：
+問3. print()デバッグを使って、以下の関数の問題を特定してください：
 
 ```python
 def divide_list(numbers, divisor):
@@ -356,7 +356,7 @@ def divide_list(numbers, divisor):
 ```
 </details>
 
-4. エラーハンドリングを追加して、エラーメッセージを表示してください：
+問4. エラーハンドリングを追加して、エラーメッセージを表示してください：
 
 ```python
 def read_file(filename):
@@ -380,7 +380,7 @@ def read_file(filename):
 ```
 </details>
 
-5. デバッグ用のprint文を追加して、以下の関数の動作を確認してください：
+問5. デバッグ用のprint文を追加して、以下の関数の動作を確認してください：
 
 ```python
 def find_max(numbers):

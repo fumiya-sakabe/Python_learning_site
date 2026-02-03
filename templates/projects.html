@@ -16,7 +16,16 @@
         <div class="projects-grid">
             {% for project in projects %}
             <div class="project-card">
-                <h3>{{ project.title }}</h3>
+                <div class="project-header">
+                    <h3>{{ project.title }}</h3>
+                    {% if current_user.is_authenticated %}
+                    <button class="favorite-btn {% if 'project:' + project.id in favorites %}active{% endif %}" 
+                            data-kind="project" data-id="{{ project.id }}" 
+                            title="お気に入りに追加/削除">
+                        ⭐
+                    </button>
+                    {% endif %}
+                </div>
                 <p class="project-description">{{ project.get('description', '説明がありません') }}</p>
                 <div class="project-id">ID: {{ project.id }}</div>
                 <div class="project-actions">
@@ -32,5 +41,36 @@
         {% endif %}
     </div>
 </section>
+
+<script>
+// お気に入りボタンの処理
+document.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        const kind = this.dataset.kind;
+        const id = this.dataset.id;
+        
+        try {
+            const response = await fetch('/api/favorites/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ item_id: id, kind: kind })
+            });
+            
+            const data = await response.json();
+            if (data.ok) {
+                if (data.is_favorite) {
+                    this.classList.add('active');
+                } else {
+                    this.classList.remove('active');
+                }
+            }
+        } catch (error) {
+            console.error('お気に入りの更新に失敗しました:', error);
+        }
+    });
+});
+</script>
 {% endblock %}
 

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}よくあるつまずきポイント - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>よくあるつまずきポイント</h1>
+        <p>初心者がよくする間違いと、正しい書き方を比較して学びましょう</p>
+    </div>
+</div>
+
+<section class="mistakes-section">
+    <div class="container">
+        <div class="mistakes-intro">
+            <p>プログラミングを始めたばかりの頃は、同じような間違いを繰り返しがちです。このページでは、よくある間違いと正しい書き方を比較することで、エラーを避けられるようになります。</p>
+        </div>
+
+        <div class="mistakes-list">
+            {% for mistake in mistakes %}
+            <div class="mistake-item">
+                <div class="mistake-header">
+                    <h3>{{ mistake.title }}</h3>
+                    {% if mistake.related_lessons %}
+                    <div class="related-lessons">
+                        {% for lesson_id in mistake.related_lessons %}
+                        {% for lesson in all_lessons %}
+                        {% if lesson.id == lesson_id %}
+                        <a href="{{ url_for('lesson_detail', lesson_id=lesson_id) }}" class="lesson-link">
+                            {{ lesson.title }}
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="mistake-content">
+                    <div class="code-comparison">
+                        <div class="code-wrong">
+                            <div class="code-label">❌ よくある間違い</div>
+                            <pre><code>{{ mistake.wrong_code }}</code></pre>
+                        </div>
+                        <div class="code-correct">
+                            <div class="code-label">✅ 正しい書き方</div>
+                            <pre><code>{{ mistake.correct_code }}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="mistake-explanation">
+                        <div class="explanation-label">💡 なぜ？</div>
+                        <p>{{ mistake.explanation }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not mistakes %}
+        <div class="empty-state">
+            <p>該当する項目が見つかりませんでした。</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

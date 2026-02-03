@@ -22,7 +22,7 @@
 
 ### 1. 本番環境向けの設定
 
-**debugモードを無効化**
+<strong class="highlight">debugモードを無効化</strong>
 
 ```python
 # 開発環境
@@ -34,7 +34,7 @@ if __name__ == '__main__':
     app.run(debug=False)
 ```
 
-**環境変数で設定を管理**
+<strong class="highlight">環境変数で設定を管理</strong>
 
 ```python
 import os
@@ -93,7 +93,7 @@ git push -u origin main
 
 ### 5. PythonAnywhereでのデプロイ
 
-**手順：**
+<strong class="highlight">手順：</strong>
 
 1. PythonAnywhereにアカウントを作成
 2. Dashboardから「Web」タブを開く
@@ -102,7 +102,7 @@ git push -u origin main
 5. 「Manual configuration」を選択
 6. 「Reload」をクリック
 
-**コードのアップロード：**
+<strong class="highlight">コードのアップロード：</strong>
 
 ```bash
 # Bashコンソールで実行
@@ -110,7 +110,7 @@ cd ~/myapp
 git clone https://github.com/username/repository.git
 ```
 
-**WSGIファイルの設定：**
+<strong class="highlight">WSGIファイルの設定：</strong>
 
 ```python
 # /var/www/username_pythonanywhere_com_wsgi.py
@@ -122,13 +122,13 @@ if path not in sys.path:
 from app import app as application
 ```
 
-**環境変数の設定：**
+<strong class="highlight">環境変数の設定：</strong>
 
 Dashboard → Web → Environment variables で設定
 
 ### 6. Renderでのデプロイ
 
-**手順：**
+<strong class="highlight">手順：</strong>
 
 1. Renderにアカウントを作成
 2. 「New」→「Web Service」を選択
@@ -138,13 +138,13 @@ Dashboard → Web → Environment variables で設定
    - Start Command: `gunicorn app:app`
 5. 「Create Web Service」をクリック
 
-**requirements.txtに追加：**
+<strong class="highlight">requirements.txtに追加：</strong>
 
 ```
 gunicorn==21.2.0
 ```
 
-**Procfile（オプション）：**
+<strong class="highlight">Procfile（オプション）：</strong>
 
 ```
 web: gunicorn app:app
@@ -178,7 +178,7 @@ load_dotenv()
 SECRET_KEY = os.environ.get('SECRET_KEY')
 ```
 
-**注意**: `.env`ファイルはGitにコミットしない
+<strong class="highlight">注意</strong>: `.env`ファイルはGitにコミットしない
 
 ### 9. 静的ファイルの設定
 
@@ -238,7 +238,7 @@ if not app.debug:
 
 ## 演習課題
 
-1. 本番環境向けに`app.py`を設定してください：
+問1. 本番環境向けに`app.py`を設定してください：
 
    ```python
    import os
@@ -264,7 +264,7 @@ if __name__ == '__main__':
 ```
 </details>
 
-2. `requirements.txt`を確認・更新してください：
+問2. `requirements.txt`を確認・更新してください：
 
    ```bash
    pip freeze > requirements.txt
@@ -280,7 +280,7 @@ pip freeze > requirements.txt
 ```
 </details>
 
-3. `.gitignore`ファイルを作成してください：
+問3. `.gitignore`ファイルを作成してください：
 
    ```
    venv/
@@ -305,7 +305,7 @@ instance/
 ```
 </details>
 
-4. GitHubリポジトリを作成してコードを公開してください：
+問4. GitHubリポジトリを作成してコードを公開してください：
 
    ```bash
    git init
@@ -328,7 +328,7 @@ git push -u origin main
 ```
 </details>
 
-5. PythonAnywhereまたはRenderでアプリケーションをデプロイしてください：
+問5. PythonAnywhereまたはRenderでアプリケーションをデプロイしてください：
 
 - PythonAnywhere: Dashboard → Web → Add a new web app
 - Render: New → Web Service → Connect repository

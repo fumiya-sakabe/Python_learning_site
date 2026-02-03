@@ -201,7 +201,7 @@ if __name__ == '__main__':
 
 ### 7. テンプレートの例
 
-**index.html**
+<strong class="term">index.html</strong>
 
 ```html
 {% extends "base.html" %}
@@ -226,7 +226,7 @@ if __name__ == '__main__':
 {% endblock %}
 ```
 
-**create.html**
+<strong class="term">create.html</strong>
 
 ```html
 {% extends "base.html" %}
@@ -293,7 +293,7 @@ if __name__ == '__main__':
 
 ## 演習課題
 
-1. データベースを初期化して、メモテーブルを作成してください：
+問1. データベースを初期化して、メモテーブルを作成してください：
 
 ```python
 def init_db():
@@ -322,7 +322,7 @@ def init_db():
 ```
 </details>
 
-2. メモを作成する機能を実装してください：
+問2. メモを作成する機能を実装してください：
 
 ```python
 @app.route('/create', methods=['GET', 'POST'])
@@ -349,7 +349,7 @@ def create():
 ```
 </details>
 
-3. メモ一覧を表示する機能を実装してください：
+問3. メモ一覧を表示する機能を実装してください：
 
 ```python
 @app.route('/')
@@ -371,7 +371,7 @@ def index():
 ```
 </details>
 
-4. メモを編集する機能を実装してください：
+問4. メモを編集する機能を実装してください：
 
 ```python
 @app.route('/<int:id>/edit', methods=['GET', 'POST'])
@@ -400,7 +400,7 @@ def edit(id):
 ```
 </details>
 
-5. メモを削除する機能を実装してください：
+問5. メモを削除する機能を実装してください：
 
 ```python
 @app.route('/<int:id>/delete', methods=['POST'])

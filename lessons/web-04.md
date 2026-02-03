@@ -86,7 +86,7 @@ try {
 
 ## 演習課題
 
-1. Flaskで`/api/likes`（POST）を作り、`count`を返却してください。
+問1. Flaskで`/api/likes`（POST）を作り、`count`を返却してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -102,7 +102,7 @@ def api_likes():
 ```
 </details>
 
-2. ボタンをクリックすると`/api/likes`を呼び出し、最新カウントを表示してください。
+問2. ボタンをクリックすると`/api/likes`を呼び出し、最新カウントを表示してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -116,7 +116,7 @@ document.querySelector('#like-btn').addEventListener('click', async () => {
 ```
 </details>
 
-3. エラー時にユーザーへメッセージを出す仕組みを追加してください。
+問3. エラー時にユーザーへメッセージを出す仕組みを追加してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -131,7 +131,7 @@ try {
 ```
 </details>
 
-4. `fetch` の前にボタンを無効化し、完了後に戻す処理を追加してください。
+問4. `fetch` の前にボタンを無効化し、完了後に戻す処理を追加してください。
 
 <details>
 <summary>解答を表示</summary>
@@ -153,4 +153,11 @@ try {
 - `res.ok` や例外処理でエラーハンドリング
 - CSRFトークンやローディングUIを忘れずに
 - ここまで押さえれば `flask-01` 以降の内容が理解しやすくなります
+
+
+
+
+
+
+
 

@@ -10,7 +10,16 @@
 <div class="lesson-detail-header">
     <div class="container">
         <a href="{{ url_for('lessons_list') }}" class="back-link">← レッスン一覧に戻る</a>
-        <h1>{{ lesson.title }}</h1>
+        <div class="lesson-title-row">
+            <h1>{{ lesson.title }}</h1>
+            {% if current_user.is_authenticated %}
+            <button class="favorite-btn {% if is_favorite %}active{% endif %}" 
+                    data-kind="lesson" data-id="{{ lesson.id }}" 
+                    title="お気に入りに追加/削除">
+                ⭐
+            </button>
+            {% endif %}
+        </div>
         <div class="lesson-meta">
             <span class="badge">{{ lesson.get('level', '初級') }}</span>
             <span class="badge">{{ lesson.get('category', 'N/A') }}</span>
@@ -26,6 +35,13 @@
                 {{ '完了を外す' if completed else 'このレッスンを完了にする' }}
             </button>
             <span id="progress-state" class="badge">{{ '完了' if completed else '未完了' }}</span>
+        </div>
+        
+        <div class="lesson-note-section">
+            <h3>📝 学習ノート</h3>
+            <textarea id="lesson-note" class="note-textarea" placeholder="このレッスンについてメモを残せます...">{{ note }}</textarea>
+            <button id="save-note" class="btn btn-primary btn-sm">保存</button>
+            <span id="note-saved" class="note-saved-indicator" style="display: none;">保存しました</span>
         </div>
         {% endif %}
         <div class="markdown-body">
@@ -81,5 +97,36 @@ document.getElementById('toggle-progress')?.addEventListener('click', async func
 });
 </script>
 {% endif %}
+
+<script>
+// お気に入りボタンの処理
+document.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        const kind = this.dataset.kind;
+        const id = this.dataset.id;
+        
+        try {
+            const response = await fetch('/api/favorites/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ item_id: id, kind: kind })
+            });
+            
+            const data = await response.json();
+            if (data.ok) {
+                if (data.is_favorite) {
+                    this.classList.add('active');
+                } else {
+                    this.classList.remove('active');
+                }
+            }
+        } catch (error) {
+            console.error('お気に入りの更新に失敗しました:', error);
+        }
+    });
+});
+</script>
 {% endblock %}
 

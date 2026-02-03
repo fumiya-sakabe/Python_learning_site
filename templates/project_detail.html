@@ -9,7 +9,16 @@
 {% block content %}
 <div class="page-header">
     <div class="container">
-        <h1>{{ project.title }}</h1>
+        <div class="project-title-row">
+            <h1>{{ project.title }}</h1>
+            {% if current_user.is_authenticated %}
+            <button class="favorite-btn {% if is_favorite %}active{% endif %}" 
+                    data-kind="project" data-id="{{ project.id }}" 
+                    title="お気に入りに追加/削除">
+                ⭐
+            </button>
+            {% endif %}
+        </div>
         <p class="project-id">ID: {{ project.id }}</p>
     </div>
 </div>
@@ -22,6 +31,13 @@
                 {{ '完了を外す' if completed else 'このプロジェクトを完了にする' }}
             </button>
             <span id="progress-state" class="badge">{{ '完了' if completed else '未完了' }}</span>
+        </div>
+        
+        <div class="lesson-note-section">
+            <h3>📝 学習ノート</h3>
+            <textarea id="lesson-note" class="note-textarea" placeholder="このプロジェクトについてメモを残せます...">{{ note }}</textarea>
+            <button id="save-note" class="btn btn-primary btn-sm">保存</button>
+            <span id="note-saved" class="note-saved-indicator" style="display: none;">保存しました</span>
         </div>
         {% endif %}
         <div class="markdown-body">
@@ -78,6 +94,77 @@ document.getElementById('toggle-progress')?.addEventListener('click', async func
 });
 </script>
 {% endif %}
+
+<script>
+// お気に入りボタンの処理
+document.querySelectorAll('.favorite-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+        const kind = this.dataset.kind;
+        const id = this.dataset.id;
+        
+        try {
+            const response = await fetch('/api/favorites/toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ item_id: id, kind: kind })
+            });
+            
+            const data = await response.json();
+            if (data.ok) {
+                if (data.is_favorite) {
+                    this.classList.add('active');
+                } else {
+                    this.classList.remove('active');
+                }
+            }
+        } catch (error) {
+            console.error('お気に入りの更新に失敗しました:', error);
+        }
+    });
+});
+</script>
+
+<script>
+// ノート保存の処理
+document.addEventListener('DOMContentLoaded', function() {
+    const saveNoteBtn = document.getElementById('save-note');
+    const noteTextarea = document.getElementById('lesson-note');
+    const noteSaved = document.getElementById('note-saved');
+    
+    if (saveNoteBtn && noteTextarea) {
+        saveNoteBtn.addEventListener('click', async function() {
+            const note = noteTextarea.value.trim();
+            
+            try {
+                const response = await fetch('/api/notes/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        item_id: '{{ project.id }}', 
+                        kind: 'project',
+                        note: note 
+                    })
+                });
+                
+                const data = await response.json();
+                if (data.ok) {
+                    noteSaved.style.display = 'inline';
+                    setTimeout(() => {
+                        noteSaved.style.display = 'none';
+                    }, 2000);
+                }
+            } catch (error) {
+                console.error('ノートの保存に失敗しました:', error);
+                alert('ノートの保存に失敗しました');
+            }
+        });
+    }
+});
+</script>
 {% endblock %}
 
 

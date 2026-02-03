@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}学習ダッシュボード - Python学習サイト{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1>学習ダッシュボード</h1>
+        <p>{{ current_user.name }}さんの学習進捗を確認できます</p>
+    </div>
+</div>
+
+<section class="dashboard-section">
+    <div class="container">
+        <!-- 統計サマリー -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-value">{{ total_completed_lessons }}</div>
+                <div class="stat-label">完了レッスン数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💻</div>
+                <div class="stat-value">{{ total_completed_projects }}</div>
+                <div class="stat-label">完了プロジェクト数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-value">{{ streak }}</div>
+                <div class="stat-label">連続学習日数</div>
+            </div>
+        </div>
+
+        <!-- Phase別進捗 -->
+        <div class="progress-cards">
+            <div class="progress-card">
+                <h3>Phase1：Python基礎</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: {{ phase1_progress.percent }}%"></div>
+                </div>
+                <div class="progress-text">
+                    {{ phase1_progress.completed }} / {{ phase1_progress.total }} 完了 ({{ phase1_progress.percent }}%)
+                </div>
+            </div>
+
+            <div class="progress-card">
+                <h3>Phase2：ミニアプリ</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: {{ projects_progress.percent }}%"></div>
+                </div>
+                <div class="progress-text">
+                    {{ projects_progress.completed }} / {{ projects_progress.total }} 完了 ({{ projects_progress.percent }}%)
+                </div>
+            </div>
+
+            <div class="progress-card">
+                <h3>Phase3：Webアプリ開発</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" style="width: {{ phase3_progress.percent }}%"></div>
+                </div>
+                <div class="progress-text">
+                    {{ phase3_progress.completed }} / {{ phase3_progress.total }} 完了 ({{ phase3_progress.percent }}%)
+                </div>
+            </div>
+        </div>
+
+        <!-- 最近完了したレッスン -->
+        {% if recent_completed %}
+        <div class="recent-completed">
+            <h3>最近完了したレッスン</h3>
+            <div class="recent-lessons-grid">
+                {% for lesson in recent_completed %}
+                <div class="recent-lesson-card">
+                    <h4>{{ lesson.title }}</h4>
+                    <a href="{{ url_for('lesson_detail', lesson_id=lesson.id) }}" class="btn btn-sm btn-secondary">詳細を見る</a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- クイックアクセス -->
+        <div class="quick-links">
+            <h3>クイックアクセス</h3>
+            <div class="quick-links-grid">
+                <a href="{{ url_for('lessons_list') }}" class="quick-link-card">
+                    <div class="quick-link-icon">📖</div>
+                    <div class="quick-link-text">レッスン一覧</div>
+                </a>
+                <a href="{{ url_for('projects_list') }}" class="quick-link-card">
+                    <div class="quick-link-icon">💻</div>
+                    <div class="quick-link-text">プロジェクト一覧</div>
+                </a>
+                <a href="{{ url_for('favorites_page') }}" class="quick-link-card">
+                    <div class="quick-link-icon">⭐</div>
+                    <div class="quick-link-text">お気に入り</div>
+                </a>
+                <a href="{{ url_for('roadmap') }}" class="quick-link-card">
+                    <div class="quick-link-icon">🗺️</div>
+                    <div class="quick-link-text">ロードマップ</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -221,7 +221,7 @@ pip install -r requirements.txt
 
 ## 演習課題
 
-1. 仮想環境を作成して、`flask`パッケージをインストールしてください：
+問1. 仮想環境を作成して、`flask`パッケージをインストールしてください：
 
 ```bash
 # 仮想環境を作成
@@ -244,7 +244,7 @@ pip list | grep Flask   # Windowsは findstr Flask
 ```
 </details>
 
-2. `requirements.txt`ファイルを作成して、以下のパッケージを記載してください：
+問2. `requirements.txt`ファイルを作成して、以下のパッケージを記載してください：
 
 ```
 Flask==3.0.0
@@ -261,7 +261,7 @@ pip freeze > requirements.txt
 ```
 </details>
 
-3. `requirements.txt`からパッケージを一括インストールしてください：
+問3. `requirements.txt`からパッケージを一括インストールしてください：
 
 ```bash
 pip install -r requirements.txt
@@ -275,7 +275,7 @@ pip install -r requirements.txt
 ```
 </details>
 
-4. インストールされているパッケージの一覧を表示して、バージョンを確認してください：
+問4. インストールされているパッケージの一覧を表示して、バージョンを確認してください：
 
 ```bash
 pip list
@@ -289,7 +289,7 @@ pip list
 ```
 </details>
 
-5. 特定のパッケージの情報を表示してください：
+問5. 特定のパッケージの情報を表示してください：
 
 ```bash
 pip show flask

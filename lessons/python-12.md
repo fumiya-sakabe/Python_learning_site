@@ -182,7 +182,7 @@ print(result)  # 15
 
 ## 演習課題
 
-1. `Student`クラスを作成して、名前と年齢を持つ学生を表現してください：
+問1. `Student`クラスを作成して、名前と年齢を持つ学生を表現してください：
 
 ```python
 class Student:
@@ -212,7 +212,7 @@ s.introduce()
 ```
 </details>
 
-2. `Rectangle`クラスを作成して、幅と高さから面積と周囲の長さを計算してください：
+問2. `Rectangle`クラスを作成して、幅と高さから面積と周囲の長さを計算してください：
 
 ```python
 class Rectangle:
@@ -246,7 +246,7 @@ class Rectangle:
 ```
 </details>
 
-3. `BankAccount`クラスを作成して、残高の管理機能を実装してください：
+問3. `BankAccount`クラスを作成して、残高の管理機能を実装してください：
 
 ```python
 class BankAccount:
@@ -292,7 +292,7 @@ class BankAccount:
 ```
 </details>
 
-4. `__str__`メソッドを実装して、オブジェクトを文字列として表示してください：
+問4. `__str__`メソッドを実装して、オブジェクトを文字列として表示してください：
 
 ```python
 class Person:
@@ -319,7 +319,7 @@ class Person:
 ```
 </details>
 
-5. クラス変数を使って、作成されたインスタンスの数を数えてください：
+問5. クラス変数を使って、作成されたインスタンスの数を数えてください：
 
 ```python
 class Person:

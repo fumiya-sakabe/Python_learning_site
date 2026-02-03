@@ -131,6 +131,29 @@
     margin: 2rem 0;
 }
 
+/* 専門用語の強調スタイル（視認性向上） */
+.markdown-body strong.term {
+    color: var(--secondary-color);
+    font-weight: 600;
+    padding: 0.15rem 0.35rem;
+    background-color: rgba(56, 189, 248, 0.15);
+    border-radius: 0.3rem;
+    display: inline-block;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+/* ポイント・注意などの強調スタイル（視認性向上） */
+.markdown-body strong.highlight {
+    color: var(--primary-color);
+    font-weight: 600;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 0.6rem;
+    padding-right: 0.4rem;
+    background-color: rgba(124, 58, 237, 0.08);
+    border-radius: 0.25rem;
+    display: inline-block;
+}
+
 /* コードハイライト用のスタイル（Pygments用） */
 .highlight {
     margin-bottom: 1rem;
